@@ -10,13 +10,15 @@ import {
   Zap,
   AlertTriangle,
   RotateCcw,
-  Star
+  Star,
+  Clock
 } from 'lucide-react';
 import { Header } from '@/components/Header';
 import { ModeToggle } from '@/components/ModeToggle';
 import { ChecklistSection } from '@/components/ChecklistSection';
 import { InfoCard } from '@/components/InfoCard';
 import { ProgressBar } from '@/components/ProgressBar';
+import { TrackFlowTimeline } from '@/components/TrackFlowTimeline';
 import { genres } from '@/data/genres';
 import { useAdvancedMode } from '@/hooks/useAdvancedMode';
 import { useChecklist } from '@/hooks/useChecklist';
@@ -101,6 +103,13 @@ const GenreChecklist = () => {
             </p>
           </div>
         </div>
+
+        {/* Track Flow Timeline */}
+        {genre.trackFlow && (
+          <InfoCard title="Typical Track Flow" icon={<Clock className="w-5 h-5" />} variant="secondary">
+            <TrackFlowTimeline sections={genre.trackFlow} />
+          </InfoCard>
+        )}
 
         {/* Key Mixing */}
         <InfoCard title="Key Mixing (Camelot)" icon={<Key className="w-5 h-5" />} variant="primary">

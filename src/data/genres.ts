@@ -1,3 +1,5 @@
+import { TrackSection } from '@/components/TrackFlowTimeline';
+
 export interface Genre {
   id: string;
   name: string;
@@ -20,6 +22,7 @@ export interface Genre {
     advanced: string[];
   };
   watchouts: string[];
+  trackFlow?: TrackSection[];
 }
 
 export const genres: Genre[] = [
@@ -755,6 +758,197 @@ export const genres: Genre[] = [
       "BPM jumps need musical justification",
       "Know your audience's expectations",
       "Prep time is essential with varied sets"
+    ],
+    trackFlow: [
+      { name: 'Intro', bars: 16, type: 'intro' },
+      { name: 'Build 1', bars: 16, type: 'build' },
+      { name: 'Drop 1', bars: 32, type: 'drop' },
+      { name: 'Breakdown', bars: 32, type: 'breakdown' },
+      { name: 'Build 2', bars: 16, type: 'build' },
+      { name: 'Drop 2', bars: 32, type: 'drop' },
+      { name: 'Outro', bars: 16, type: 'outro' }
+    ]
+  },
+  {
+    id: "melodic-bass",
+    name: "Melodic Bass",
+    icon: "🌊",
+    bpmRange: { min: 140, max: 160 },
+    keyTips: {
+      basic: [
+        "Harmonic mixing is ESSENTIAL - melodies are central",
+        "Same key or +/-1 Camelot for smooth blends",
+        "Minor keys dominate - match the emotional arc"
+      ],
+      advanced: [
+        "+/-2 Camelot during bass-only sections",
+        "Key lifts (+1 semitone) create euphoric moments",
+        "Layer pads carefully - check harmonic stacking"
+      ]
+    },
+    bpmTips: {
+      basic: [
+        "Wide range: know your track tempos",
+        "Stay within 4-6 BPM for blends",
+        "Use long breakdowns for larger BPM shifts"
+      ],
+      advanced: [
+        "150 BPM is the sweet spot for most melodic bass",
+        "Can transition to/from future bass (140) smoothly",
+        "Half-time sections allow tempo perception changes"
+      ]
+    },
+    beatgridSteps: [
+      "Analyze track fully",
+      "Beat 1 should align with the first kick",
+      "Melodic bass often has complex arrangements",
+      "Verify grid during both melodic and bass sections",
+      "Check for tempo changes in hybrid tracks",
+      "Save corrected beatgrid"
+    ],
+    phraseTips: [
+      "16 and 32-bar phrases are standard",
+      "Breakdowns can be long (32-64 bars)",
+      "Builds are emotional and telegraphed",
+      "Drops typically 32 bars with variations",
+      "Second drops often have different bass design"
+    ],
+    waveformTips: [
+      "Breakdowns show melodic pads and vocals",
+      "Builds rise gradually with synths and drums",
+      "Drops are thick but have melodic movement",
+      "Look for bass wobble patterns in drop sections",
+      "Outro often mirrors intro with decay"
+    ],
+    transitionChecklist: [
+      "Prep incoming: fader down, EQs ready",
+      "LOW completely down for incoming",
+      "Hot cue at breakdown or intro",
+      "Cue in headphones - check melody compatibility",
+      "Start during outgoing breakdown",
+      "Blend melodies over 16-32 bars",
+      "Clean bass swap - one bass at a time",
+      "Exit before incoming drop for maximum impact"
+    ],
+    emergencyOut: {
+      basic: [
+        "Kill bass on outgoing immediately",
+        "Filter sweep up quickly",
+        "Fade during a melodic swell"
+      ],
+      advanced: [
+        "Echo/reverb the melodic elements out",
+        "Use incoming pad to mask the exit",
+        "Breakdown provides natural cover"
+      ]
+    },
+    watchouts: [
+      "Melody clashes are immediately obvious",
+      "Emotional arc matters - don't kill the vibe",
+      "Bass overlap destroys the low end",
+      "Long tracks require planning ahead",
+      "Vocal timing must be considered"
+    ],
+    trackFlow: [
+      { name: 'Intro', bars: 16, type: 'intro' },
+      { name: 'Vocal/Melodic', bars: 16, type: 'vocal' },
+      { name: 'Build 1', bars: 16, type: 'build' },
+      { name: 'Drop 1', bars: 32, type: 'drop' },
+      { name: 'Breakdown', bars: 32, type: 'breakdown' },
+      { name: 'Build 2', bars: 16, type: 'build' },
+      { name: 'Drop 2', bars: 32, type: 'drop' },
+      { name: 'Outro', bars: 16, type: 'outro' }
+    ]
+  },
+  {
+    id: "ecstatic-dance",
+    name: "Ecstatic Dance",
+    icon: "🕉️",
+    bpmRange: { min: 90, max: 130 },
+    keyTips: {
+      basic: [
+        "Organic, flowing transitions - key less strict",
+        "World music elements may not follow Western scales",
+        "Feel the frequency match over strict Camelot"
+      ],
+      advanced: [
+        "Modal mixing (Dorian, Mixolydian) common",
+        "Drone-based tracks are key-flexible",
+        "Vocals and chants need harmonic awareness"
+      ]
+    },
+    bpmTips: {
+      basic: [
+        "Wide BPM range - journey from slow to peak",
+        "Gradual tempo shifts over many tracks",
+        "Meet in the middle for larger jumps"
+      ],
+      advanced: [
+        "Opening wave: 90-100 BPM grounding",
+        "Peak energy: 120-130 BPM",
+        "Cool down: 100-90 BPM organic descent"
+      ]
+    },
+    beatgridSteps: [
+      "Analyze track - organic rhythms may need manual work",
+      "World percussion doesn't always grid perfectly",
+      "Set beat 1 on the first clear downbeat",
+      "Ecstatic tracks may have tempo drift - that's OK",
+      "Focus on feel over perfect grid",
+      "Some tracks work better with SYNC off"
+    ],
+    phraseTips: [
+      "Phrases are more fluid - feel the cycles",
+      "8-bar cycles common but not rigid",
+      "Drum circles build organically",
+      "Transitions happen when energy aligns",
+      "Let tracks breathe - no rush"
+    ],
+    waveformTips: [
+      "Less dramatic structure than EDM",
+      "Energy ebbs and flows organically",
+      "Percussion patterns visible as rhythmic texture",
+      "Breakdowns may just be lower energy, not silent",
+      "Look for natural transition points"
+    ],
+    transitionChecklist: [
+      "Prep incoming: fader down, EQs neutral",
+      "May not need LOW cut - depends on bass content",
+      "Find a groovy loop point in incoming",
+      "Cue in headphones - feel the groove compatibility",
+      "Start when the vibe feels right",
+      "Long, gradual blends work well (16-32+ bars)",
+      "Let rhythms interlock naturally",
+      "Energy should flow, not jump"
+    ],
+    emergencyOut: {
+      basic: [
+        "Reduce bass gently",
+        "Let the track fade naturally",
+        "Filter slowly - no abrupt changes"
+      ],
+      advanced: [
+        "Use ambient/drone to bridge tracks",
+        "Percussion-only sections for transitions",
+        "Layer nature sounds or pads to smooth exits"
+      ]
+    },
+    watchouts: [
+      "Jarring transitions break the trance state",
+      "Respect the journey - slow build is intentional",
+      "Don't over-EQ - organic sound is the goal",
+      "Read the room's energy, not the BPM counter",
+      "Silence and space are valid transitions"
+    ],
+    trackFlow: [
+      { name: 'Intro/Grounding', bars: 32, type: 'intro' },
+      { name: 'Groove 1', bars: 32, type: 'groove' },
+      { name: 'Build', bars: 16, type: 'build' },
+      { name: 'Peak Energy', bars: 32, type: 'drop' },
+      { name: 'Groove 2', bars: 32, type: 'groove' },
+      { name: 'Breakdown', bars: 16, type: 'breakdown' },
+      { name: 'Vocal/Chant', bars: 16, type: 'vocal' },
+      { name: 'Outro/Fade', bars: 32, type: 'outro' }
     ]
   }
 ];
