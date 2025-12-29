@@ -9,19 +9,26 @@ const PrepPage = () => {
       <header className="sticky top-0 z-50 backdrop-blur-xl bg-background/80 border-b border-border/50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <Link
-            to="/intro"
+            to="/"
             className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
           >
             <ArrowLeft className="w-5 h-5" />
-            <span>Back to 101</span>
+            <span>Home</span>
           </Link>
-          <Link
-            to="/intro/playing"
-            className="inline-flex items-center gap-2 text-secondary hover:text-secondary/80 transition-colors text-sm font-medium"
-          >
-            <span>Playing</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
+          <div className="flex items-center gap-3">
+            <Link
+              to="/intro"
+              className="text-xs px-3 py-1.5 rounded-full bg-muted text-muted-foreground hover:bg-muted/80 transition-colors"
+            >
+              101 Hub
+            </Link>
+            <Link
+              to="/intro/playing"
+              className="text-xs px-3 py-1.5 rounded-full bg-secondary/10 text-secondary hover:bg-secondary/20 transition-colors"
+            >
+              Playing →
+            </Link>
+          </div>
         </div>
       </header>
 
