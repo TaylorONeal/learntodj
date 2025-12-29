@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Star, BookOpen } from 'lucide-react';
+import { Star, Headphones, Play, ChevronRight } from 'lucide-react';
 import { Header } from '@/components/Header';
 import { SearchBar } from '@/components/SearchBar';
 import { ModeToggle } from '@/components/ModeToggle';
@@ -70,28 +70,56 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Intro 101 Card */}
-        <Link
-          to="/intro"
-          className="block glass-card rounded-xl p-5 border border-accent/30 bg-accent/5 hover:border-accent/50 transition-all duration-300 group"
-        >
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-accent/20 flex items-center justify-center group-hover:scale-110 transition-transform">
-              <BookOpen className="w-6 h-6 text-accent" />
-            </div>
-            <div className="flex-1">
-              <h3 className="font-semibold text-foreground group-hover:text-accent transition-colors">
-                🎧 DJ Mixing 101
-              </h3>
-              <p className="text-sm text-muted-foreground">
-                Master the two core phases: <span className="text-primary">Prep</span> & <span className="text-secondary">Playing</span>
-              </p>
-            </div>
+        {/* DJ 101 Section */}
+        <div className="space-y-3">
+          <h2 className="text-lg font-semibold text-foreground">🎧 Start Here — DJ Mixing 101</h2>
+          <div className="grid sm:grid-cols-2 gap-3">
+            {/* Prep Card */}
+            <Link
+              to="/intro/prep"
+              className="group glass-card rounded-xl p-4 border border-primary/30 bg-primary/5 hover:border-primary/50 hover:bg-primary/10 transition-all duration-300"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <Headphones className="w-5 h-5 text-primary" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors">
+                    1. Prep
+                  </h3>
+                  <p className="text-xs text-muted-foreground truncate">
+                    Before the audience hears the next track
+                  </p>
+                </div>
+                <ChevronRight className="w-4 h-4 text-primary opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0" />
+              </div>
+            </Link>
+
+            {/* Playing Card */}
+            <Link
+              to="/intro/playing"
+              className="group glass-card rounded-xl p-4 border border-secondary/30 bg-secondary/5 hover:border-secondary/50 hover:bg-secondary/10 transition-all duration-300"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-secondary/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <Play className="w-5 h-5 text-secondary" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-semibold text-foreground group-hover:text-secondary transition-colors">
+                    2. Playing
+                  </h3>
+                  <p className="text-xs text-muted-foreground truncate">
+                    The part the crowd hears
+                  </p>
+                </div>
+                <ChevronRight className="w-4 h-4 text-secondary opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0" />
+              </div>
+            </Link>
           </div>
-        </Link>
+        </div>
 
         {/* Info Banner */}
-        <div className="glass-card rounded-xl p-4 border border-primary/20 bg-primary/5">
+        <div className="glass-card rounded-xl p-4 border border-muted/30 bg-muted/5">
           <p className="text-sm text-muted-foreground">
             <span className="text-primary font-medium">Tip:</span>{' '}
             {isAdvanced
