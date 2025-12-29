@@ -12,7 +12,7 @@ const IntroHub = () => {
             className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
           >
             <ArrowLeft className="w-5 h-5" />
-            <span>Back to Genres</span>
+            <span>Home</span>
           </Link>
         </div>
       </header>
