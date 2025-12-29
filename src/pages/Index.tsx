@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
-import { Star } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Star, BookOpen } from 'lucide-react';
 import { Header } from '@/components/Header';
 import { SearchBar } from '@/components/SearchBar';
 import { ModeToggle } from '@/components/ModeToggle';
@@ -68,6 +69,26 @@ const Index = () => {
             <ModeToggle isAdvanced={isAdvanced} onToggle={toggleMode} />
           </div>
         </div>
+
+        {/* Intro 101 Card */}
+        <Link
+          to="/intro"
+          className="block glass-card rounded-xl p-5 border border-accent/30 bg-accent/5 hover:border-accent/50 transition-all duration-300 group"
+        >
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-xl bg-accent/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <BookOpen className="w-6 h-6 text-accent" />
+            </div>
+            <div className="flex-1">
+              <h3 className="font-semibold text-foreground group-hover:text-accent transition-colors">
+                🎧 DJ Mixing 101
+              </h3>
+              <p className="text-sm text-muted-foreground">
+                Master the two core phases: <span className="text-primary">Prep</span> & <span className="text-secondary">Playing</span>
+              </p>
+            </div>
+          </div>
+        </Link>
 
         {/* Info Banner */}
         <div className="glass-card rounded-xl p-4 border border-primary/20 bg-primary/5">
