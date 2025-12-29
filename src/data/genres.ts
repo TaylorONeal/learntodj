@@ -112,6 +112,15 @@ export const genres: Genre[] = [
       "SYNC without grid check = false confidence",
       "Redlining meters = distortion city",
       "BPM jumps over 8 are noticeable to dancers"
+    ],
+    trackFlow: [
+      { name: 'Intro', bars: 16, type: 'intro' },
+      { name: 'Build 1', bars: 16, type: 'build' },
+      { name: 'Drop 1', bars: 32, type: 'drop' },
+      { name: 'Breakdown', bars: 32, type: 'breakdown' },
+      { name: 'Build 2', bars: 16, type: 'build' },
+      { name: 'Drop 2', bars: 32, type: 'drop' },
+      { name: 'Outro', bars: 16, type: 'outro' }
     ]
   },
   {
@@ -192,6 +201,15 @@ export const genres: Genre[] = [
       "Off-grid tracks wreck the groove immediately",
       "Don't rush - tech house is about the journey",
       "Avoid obvious vocal overlaps"
+    ],
+    trackFlow: [
+      { name: 'Intro', bars: 16, type: 'intro' },
+      { name: 'Groove 1', bars: 32, type: 'groove' },
+      { name: 'Breakdown', bars: 16, type: 'breakdown' },
+      { name: 'Groove 2', bars: 32, type: 'groove' },
+      { name: 'Build', bars: 8, type: 'build' },
+      { name: 'Drop', bars: 32, type: 'drop' },
+      { name: 'Outro', bars: 16, type: 'outro' }
     ]
   },
   {
@@ -272,6 +290,17 @@ export const genres: Genre[] = [
       "Dropping out of key ruins the vibe",
       "Don't mix drops into drops",
       "Energy flow is everything - no jarring jumps"
+    ],
+    trackFlow: [
+      { name: 'Intro', bars: 32, type: 'intro' },
+      { name: 'Melodic Build', bars: 32, type: 'build' },
+      { name: 'Breakdown 1', bars: 32, type: 'breakdown' },
+      { name: 'Build 1', bars: 32, type: 'build' },
+      { name: 'Drop 1', bars: 32, type: 'drop' },
+      { name: 'Breakdown 2', bars: 64, type: 'breakdown' },
+      { name: 'Build 2', bars: 32, type: 'build' },
+      { name: 'Drop 2', bars: 32, type: 'drop' },
+      { name: 'Outro', bars: 32, type: 'outro' }
     ]
   },
   {
@@ -353,6 +382,17 @@ export const genres: Genre[] = [
       "Two arpeggios at once = chaos",
       "BPM drift at 140 BPM is very noticeable",
       "Don't cut anthems short - fans will notice!"
+    ],
+    trackFlow: [
+      { name: 'Intro', bars: 32, type: 'intro' },
+      { name: 'Melodic Verse', bars: 32, type: 'vocal' },
+      { name: 'Breakdown 1', bars: 32, type: 'breakdown' },
+      { name: 'Build 1', bars: 32, type: 'build' },
+      { name: 'Drop/Anthem', bars: 32, type: 'drop' },
+      { name: 'Breakdown 2', bars: 64, type: 'breakdown' },
+      { name: 'Build 2', bars: 32, type: 'build' },
+      { name: 'Drop 2', bars: 32, type: 'drop' },
+      { name: 'Outro', bars: 32, type: 'outro' }
     ]
   },
   {
@@ -434,6 +474,16 @@ export const genres: Genre[] = [
       "Don't cut drops short - audiences wait for them",
       "Redlining is tempting but damaging",
       "Half-time feel requires different counting"
+    ],
+    trackFlow: [
+      { name: 'Intro', bars: 16, type: 'intro' },
+      { name: 'Vocal/Melodic', bars: 16, type: 'vocal' },
+      { name: 'Build 1', bars: 16, type: 'build' },
+      { name: 'Drop 1', bars: 32, type: 'drop' },
+      { name: 'Breakdown', bars: 16, type: 'breakdown' },
+      { name: 'Build 2', bars: 8, type: 'build' },
+      { name: 'Drop 2', bars: 32, type: 'drop' },
+      { name: 'Outro', bars: 8, type: 'outro' }
     ]
   },
   {
@@ -515,6 +565,16 @@ export const genres: Genre[] = [
       "Key clashes are obvious on melodic trap",
       "Hi-hat patterns must not conflict",
       "Don't rush the builds"
+    ],
+    trackFlow: [
+      { name: 'Intro', bars: 8, type: 'intro' },
+      { name: 'Build 1', bars: 8, type: 'build' },
+      { name: 'Drop 1', bars: 16, type: 'drop' },
+      { name: 'Breakdown', bars: 8, type: 'breakdown' },
+      { name: 'Build 2', bars: 8, type: 'build' },
+      { name: 'Drop 2', bars: 16, type: 'drop' },
+      { name: 'Drop 3', bars: 16, type: 'drop' },
+      { name: 'Outro', bars: 8, type: 'outro' }
     ]
   },
   {
@@ -596,6 +656,14 @@ export const genres: Genre[] = [
       "Off-grid at 174 BPM = disaster",
       "Beatgrid MUST be perfect",
       "Quick transitions are expected"
+    ],
+    trackFlow: [
+      { name: 'Intro', bars: 16, type: 'intro' },
+      { name: 'Build', bars: 16, type: 'build' },
+      { name: 'Drop 1', bars: 32, type: 'drop' },
+      { name: 'Breakdown', bars: 16, type: 'breakdown' },
+      { name: 'Drop 2', bars: 32, type: 'drop' },
+      { name: 'Outro', bars: 16, type: 'outro' }
     ]
   },
   {
@@ -677,6 +745,17 @@ export const genres: Genre[] = [
       "Anthem timings are sacred to fans",
       "Off-phrase kills the energy",
       "BPM must be precise at this tempo"
+    ],
+    trackFlow: [
+      { name: 'Intro', bars: 16, type: 'intro' },
+      { name: 'Melodic Verse', bars: 32, type: 'vocal' },
+      { name: 'Anti-Climax', bars: 32, type: 'breakdown' },
+      { name: 'Build 1', bars: 16, type: 'build' },
+      { name: 'Drop 1', bars: 32, type: 'drop' },
+      { name: 'Mid-Section', bars: 32, type: 'breakdown' },
+      { name: 'Build 2', bars: 16, type: 'build' },
+      { name: 'Drop 2', bars: 32, type: 'drop' },
+      { name: 'Outro', bars: 16, type: 'outro' }
     ]
   },
   {
