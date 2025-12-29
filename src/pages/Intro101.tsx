@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ArrowLeft, CheckCircle2, Headphones, Play, Brain } from 'lucide-react';
+import { TermInfoBox } from '@/components/TermInfoBox';
 
 const Intro101 = () => {
   return (
@@ -89,6 +90,57 @@ const Intro101 = () => {
               </p>
             </div>
           </div>
+
+          {/* Term Explanations for Prep */}
+          <div className="space-y-2">
+            <TermInfoBox term="BPM">
+              <p><strong>Beats Per Minute</strong> — the tempo or speed of a track. A track at 128 BPM has 128 beats in one minute. Matching BPM between tracks keeps them in sync so they don't drift apart.</p>
+            </TermInfoBox>
+            
+            <TermInfoBox term="Camelot Key">
+              <p><strong>Camelot Wheel</strong> is a color-coded system that simplifies harmonic mixing. Each key gets a number (1-12) and letter (A for minor, B for major).</p>
+              <ul className="mt-2 space-y-1 list-disc list-inside">
+                <li><strong>Same key</strong> (e.g., 8A → 8A) = perfect harmonic match</li>
+                <li><strong>±1 step</strong> (e.g., 8A → 7A or 9A) = smooth energy shift</li>
+                <li><strong>A ↔ B same number</strong> (e.g., 8A → 8B) = minor to major mood shift</li>
+              </ul>
+            </TermInfoBox>
+            
+            <TermInfoBox term="Beat 1 / Beatgrid">
+              <p>DJ software analyzes tracks to create a <strong>beatgrid</strong> — markers showing where each beat falls. <strong>Beat 1</strong> is the first beat of the bar (the downbeat, usually a kick drum). If the software misplaces beat 1, your tracks will seem synced but feel "off" rhythmically.</p>
+            </TermInfoBox>
+            
+            <TermInfoBox term="Hot Cue">
+              <p>A <strong>hot cue</strong> is a saved position in a track that you can instantly jump to by pressing a button. DJs set hot cues at key moments (intro, drop, breakdown) so they can start playback at the perfect spot without scrolling.</p>
+            </TermInfoBox>
+            
+            <TermInfoBox term="Phrase">
+              <p>EDM tracks are built in <strong>phrases</strong> — groups of bars (usually 8, 16, or 32 bars). Changes like drops, breakdowns, and new elements almost always happen at phrase boundaries. Mixing "on phrase" means starting and ending transitions at these natural boundaries for seamless blends.</p>
+            </TermInfoBox>
+            
+            <TermInfoBox term="EQ (LOW/MID/HIGH)">
+              <p>Your mixer has <strong>EQ knobs</strong> that control frequency bands:</p>
+              <ul className="mt-2 space-y-1 list-disc list-inside">
+                <li><strong>LOW</strong> = bass frequencies (kick drums, sub-bass)</li>
+                <li><strong>MID</strong> = vocals, synths, main melody</li>
+                <li><strong>HIGH</strong> = hi-hats, cymbals, brightness</li>
+              </ul>
+              <p className="mt-2">The golden rule: <strong>never have two basses at once</strong> — it sounds muddy. Cut the LOW on one track during transitions.</p>
+            </TermInfoBox>
+            
+            <TermInfoBox term="Fader">
+              <p>The <strong>channel fader</strong> controls the volume of a track (up = loud, down = silent). The <strong>crossfader</strong> blends between two channels. Most DJs keep the crossfader centered and use channel faders for volume control during transitions.</p>
+            </TermInfoBox>
+            
+            <TermInfoBox term="Filter">
+              <p>A <strong>filter</strong> removes frequencies from a sound:</p>
+              <ul className="mt-2 space-y-1 list-disc list-inside">
+                <li><strong>High-pass (filter up)</strong> = removes bass, leaves highs (sounds thin/airy)</li>
+                <li><strong>Low-pass (filter down)</strong> = removes highs, leaves bass (sounds muffled)</li>
+              </ul>
+              <p className="mt-2">"Filter neutral" or "center" means no filtering — full sound.</p>
+            </TermInfoBox>
+          </div>
         </section>
 
         {/* Section 2: Playing */}
@@ -142,6 +194,25 @@ const Intro101 = () => {
               </ul>
             </div>
           </div>
+
+          {/* Term Explanations for Playing */}
+          <div className="space-y-2">
+            <TermInfoBox term="Bass Swap">
+              <p>The moment during a transition where you <strong>cut the bass on the outgoing track</strong> and <strong>bring in the bass on the incoming track</strong>. Done at a phrase boundary, this creates a clean handoff. Never have both basses playing — it sounds muddy and unprofessional.</p>
+            </TermInfoBox>
+            
+            <TermInfoBox term="Bars">
+              <p>A <strong>bar</strong> (or measure) is a unit of musical time. In 4/4 time (standard for EDM), one bar = 4 beats. So "4-8 bars" means 16-32 beats. At 128 BPM, 8 bars ≈ 15 seconds.</p>
+            </TermInfoBox>
+            
+            <TermInfoBox term="Build">
+              <p>The <strong>build</strong> (or buildup) is the section before a drop where energy rises — drums intensify, risers sweep up, tension increases. This is often where you restore the incoming track's original BPM if you adjusted it during the transition.</p>
+            </TermInfoBox>
+            
+            <TermInfoBox term="Loop">
+              <p>A <strong>loop</strong> repeats a section of a track indefinitely. DJs use loops to extend a section (like a breakdown) while preparing the next track, or as an emergency technique to buy time if something goes wrong.</p>
+            </TermInfoBox>
+          </div>
         </section>
 
         {/* Common Mistakes */}
@@ -150,15 +221,15 @@ const Intro101 = () => {
           <ul className="text-sm text-muted-foreground space-y-2">
             <li className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-destructive"></span>
-              Mixing off-phrase
+              <span><strong>Mixing off-phrase</strong> — transitions that don't align with phrase boundaries sound jarring</span>
             </li>
             <li className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-destructive"></span>
-              Bass on bass (muddiness)
+              <span><strong>Bass on bass</strong> — two basslines at once = muddy, boomy mess</span>
             </li>
             <li className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-destructive"></span>
-              Forcing a transition because prep wasn't finished
+              <span><strong>Forcing it</strong> — rushing a transition because prep wasn't finished</span>
             </li>
           </ul>
         </section>
