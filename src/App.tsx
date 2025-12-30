@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import IntroHub from "./pages/IntroHub";
 import PrepPage from "./pages/PrepPage";
 import PlayingPage from "./pages/PlayingPage";
+import TrackFlowsPage from "./pages/TrackFlowsPage";
 import GenreChecklist from "./pages/GenreChecklist";
 import NotFound from "./pages/NotFound";
 
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/intro" element={<IntroHub />} />
           <Route path="/intro/prep" element={<PrepPage />} />
           <Route path="/intro/playing" element={<PlayingPage />} />
+          <Route path="/intro/flows" element={<TrackFlowsPage />} />
           <Route path="/genre/:genreId" element={<GenreChecklist />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
