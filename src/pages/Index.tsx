@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Star, Headphones, Play, ChevronRight } from 'lucide-react';
+import { Star, Headphones, Play, BarChart3, ChevronRight } from 'lucide-react';
 import { Header } from '@/components/Header';
 import { SearchBar } from '@/components/SearchBar';
 import { ModeToggle } from '@/components/ModeToggle';
@@ -73,7 +73,7 @@ const Index = () => {
         {/* DJ 101 Section */}
         <div className="space-y-3">
           <h2 className="text-lg font-semibold text-foreground">🎧 Start Here — DJ Mixing 101</h2>
-          <div className="grid sm:grid-cols-2 gap-3">
+          <div className="grid sm:grid-cols-3 gap-3">
             {/* Prep Card */}
             <Link
               to="/intro/prep"
@@ -88,7 +88,7 @@ const Index = () => {
                     1. Prep
                   </h3>
                   <p className="text-xs text-muted-foreground truncate">
-                    Before the audience hears the next track
+                    Before the crowd hears it
                   </p>
                 </div>
                 <ChevronRight className="w-4 h-4 text-primary opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0" />
@@ -109,10 +109,31 @@ const Index = () => {
                     2. Playing
                   </h3>
                   <p className="text-xs text-muted-foreground truncate">
-                    The part the crowd hears
+                    The live transition
                   </p>
                 </div>
                 <ChevronRight className="w-4 h-4 text-secondary opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0" />
+              </div>
+            </Link>
+
+            {/* Track Flows Card */}
+            <Link
+              to="/intro/flows"
+              className="group glass-card rounded-xl p-4 border border-accent/30 bg-accent/5 hover:border-accent/50 hover:bg-accent/10 transition-all duration-300"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-accent/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <BarChart3 className="w-5 h-5 text-accent" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-semibold text-foreground group-hover:text-accent transition-colors">
+                    3. Flows
+                  </h3>
+                  <p className="text-xs text-muted-foreground truncate">
+                    Typical track structures
+                  </p>
+                </div>
+                <ChevronRight className="w-4 h-4 text-accent opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0" />
               </div>
             </Link>
           </div>
