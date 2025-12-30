@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Headphones, Play, Brain, ChevronRight } from 'lucide-react';
+import { ArrowLeft, Headphones, Play, Brain, ChevronRight, Waves, Shuffle, Music, Disc3 } from 'lucide-react';
 
 const IntroHub = () => {
   return (
@@ -39,7 +39,7 @@ const IntroHub = () => {
           </p>
         </div>
 
-        {/* Two Phases */}
+        {/* Core Two Phases */}
         <div className="grid sm:grid-cols-2 gap-4">
           {/* Prep Card */}
           <Link
@@ -81,6 +81,59 @@ const IntroHub = () => {
             </div>
           </Link>
         </div>
+
+        {/* Additional Topics */}
+        <div className="space-y-3">
+          <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wide">More Topics</h3>
+          <div className="grid sm:grid-cols-3 gap-3">
+            {/* Track Flows */}
+            <Link
+              to="/intro/flows"
+              className="group glass-card rounded-lg p-4 border border-border/50 hover:border-primary/30 transition-all"
+            >
+              <Music className="w-5 h-5 text-primary mb-2" />
+              <h3 className="font-semibold text-foreground text-sm">Track Flows</h3>
+              <p className="text-xs text-muted-foreground">Intro → Build → Drop patterns</p>
+            </Link>
+
+            {/* Effects & Loops */}
+            <Link
+              to="/intro/effects"
+              className="group glass-card rounded-lg p-4 border border-border/50 hover:border-secondary/30 transition-all"
+            >
+              <Waves className="w-5 h-5 text-secondary mb-2" />
+              <h3 className="font-semibold text-foreground text-sm">Effects & Loops</h3>
+              <p className="text-xs text-muted-foreground">Echo, filter, loop basics</p>
+            </Link>
+
+            {/* Remixes */}
+            <Link
+              to="/intro/remixes"
+              className="group glass-card rounded-lg p-4 border border-border/50 hover:border-accent/30 transition-all"
+            >
+              <Shuffle className="w-5 h-5 text-accent mb-2" />
+              <h3 className="font-semibold text-foreground text-sm">Remixes & Edits</h3>
+              <p className="text-xs text-muted-foreground">Types, stems, mashups</p>
+            </Link>
+          </div>
+        </div>
+
+        {/* Devices Section */}
+        <Link
+          to="/intro/devices"
+          className="block glass-card rounded-xl p-5 border border-border/50 hover:border-primary/30 transition-all"
+        >
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-xl bg-muted flex items-center justify-center">
+              <Disc3 className="w-6 h-6 text-foreground" />
+            </div>
+            <div>
+              <h3 className="font-bold text-foreground">Gear Guide</h3>
+              <p className="text-xs text-muted-foreground">FLX4 vs XDJ-XZ vs CDJ-3000 — what to know</p>
+            </div>
+            <ChevronRight className="w-5 h-5 text-muted-foreground ml-auto" />
+          </div>
+        </Link>
 
         {/* Common Mistakes */}
         <div className="glass-card rounded-xl p-5 border border-destructive/30 bg-destructive/5 space-y-3">
