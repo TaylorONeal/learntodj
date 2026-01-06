@@ -5,6 +5,7 @@ import { Header } from '@/components/Header';
 import { SearchBar } from '@/components/SearchBar';
 import { ModeToggle } from '@/components/ModeToggle';
 import { GenreListItem } from '@/components/GenreListItem';
+import { InstallPWA } from '@/components/InstallPWA';
 import { genres } from '@/data/genres';
 import { useFavorites } from '@/hooks/useFavorites';
 import { useAdvancedMode } from '@/hooks/useAdvancedMode';
@@ -208,6 +209,8 @@ const Index = () => {
           </p>
         </div>
       </main>
+
+      <InstallPWA />
     </div>
   );
 };
