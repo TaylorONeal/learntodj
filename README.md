@@ -1,73 +1,63 @@
-# Welcome to your Lovable project
+# LearnToDJ (DJ Flow Guide)
 
-## Project info
+Live app: https://learntodj.lovable.app/
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+A lightweight, genre-based **EDM mixing checklist** app. The goal is dead simple: help you run the same repeatable mixing workflow every time (prep → phrase-aligned transition → clean exit), without drowning you in DJ forum lore.
 
-## How can I edit this code?
+## What this is
+- Pick a genre (House, Trance, Dubstep, DnB, etc.)
+- Get a **practical checklist** for mixing that genre:
+  - BPM range guidance
+  - Camelot key compatibility rules
+  - Beat-1 / beatgrid sanity check
+  - Phrase counting (8/16/32 bars)
+  - Mix-in / mix-out timing
+  - Quick “get out of trouble” transitions
+  - Common watchouts (bass-on-bass, off-phrase, key clash)
 
-There are several ways of editing your application.
+This is intentionally **not** an FX tutorial or a “become a pro in 7 days” thing.
 
-**Use Lovable**
+## Core mixing mental model
+Mixing is two phases on repeat:
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+1. **Prep**
+   - Choose the next track (energy, BPM, key)
+   - Verify beat 1 / grid
+   - Set a hot cue at a phrase boundary (8/16 bars)
+   - Prep EQ (incoming LOW down), fader down, filter neutral
+   - Cue in headphones and count phrasing
 
-Changes made via Lovable will be committed automatically to this repo.
+2. **Playing**
+   - Start incoming track on the phrase
+   - Blend in over 4–8 bars
+   - Bass swap on a phrase boundary
+   - Exit outgoing track cleanly
+   - If BPM bridging: “meet in the middle,” then restore track to original BPM during the build
 
-**Use your preferred IDE**
+## Key rules (the ones that matter)
+- **Camelot key mixing:** same key or **±1 step** is the safe default (e.g., 8A → 9A or 7A).
+- **BPM matching:** stay within **~4–6 BPM** for natural blends inside a groove.
+- **If BPMs are far apart:** meet in the middle (outgoing slightly up, incoming slightly down), then return the incoming track to its original BPM during the build.
+- **Phrase alignment:** most EDM changes happen in **8/16/32 bar blocks**. If you miss the phrase, wait for the next one (forcing it sounds worse than waiting).
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## Features
+- Genre picker (EDM-focused)
+- Checklist per genre (with checkboxes)
+- “Simplified” vs “Advanced tips” toggle (optional)
+- Watchouts section to prevent the most common mistakes
+- Favorites (star a genre) and persistence via local storage (if enabled)
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## Tech notes
+This project was created with Lovable and is intended to stay simple:
+- Static genre data (JSON / in-code constants)
+- No auth
+- No backend required
 
-Follow these steps:
+If the codebase uses a standard modern web stack (common in Lovable builds), local development will look like the commands below.
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+## Local development
+> If you cloned the repo locally:
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```bash
+npm install
 npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
