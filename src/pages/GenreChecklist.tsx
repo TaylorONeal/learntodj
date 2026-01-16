@@ -1,23 +1,23 @@
 import { useParams, Navigate } from 'react-router-dom';
-import { 
-  Music, 
-  Key, 
-  Gauge, 
-  Grid3X3, 
-  Layers, 
-  Activity, 
-  ListChecks, 
+import {
+  Key,
+  Gauge,
+  Grid3X3,
+  Layers,
+  Activity,
+  ListChecks,
   Zap,
   AlertTriangle,
   RotateCcw,
   Star,
-  Clock
+  Clock,
+  Play,
+  CheckCircle2
 } from 'lucide-react';
 import { Header } from '@/components/Header';
 import { ModeToggle } from '@/components/ModeToggle';
 import { ChecklistSection } from '@/components/ChecklistSection';
 import { InfoCard } from '@/components/InfoCard';
-import { ProgressBar } from '@/components/ProgressBar';
 import { TrackFlowTimeline } from '@/components/TrackFlowTimeline';
 import { genres } from '@/data/genres';
 import { useAdvancedMode } from '@/hooks/useAdvancedMode';
@@ -40,30 +40,33 @@ const GenreChecklist = () => {
   const allSections = [
     { key: 'beatgrid', items: genre.beatgridSteps },
     { key: 'transition', items: genre.transitionChecklist },
-    { key: 'emergency', items: isAdvanced 
+    { key: 'emergency', items: isAdvanced
       ? [...genre.emergencyOut.basic, ...genre.emergencyOut.advanced]
       : genre.emergencyOut.basic
     },
   ];
 
   const totalItems = allSections.reduce((sum, s) => sum + s.items.length, 0);
-  const completedItems = allSections.reduce((sum, s) => 
+  const checkedItems = allSections.reduce((sum, s) =>
     sum + s.items.filter((_, i) => isChecked(s.key, i)).length, 0
   );
-  const overallProgress = Math.round((completedItems / totalItems) * 100);
+  const hasActiveSession = checkedItems > 0;
 
   return (
     <div className="min-h-screen bg-background pb-8">
       <Header title={genre.name} showBack />
 
       <main className="container mx-auto px-4 py-6 space-y-6">
-        {/* Genre Header */}
-        <div className="glass-card rounded-xl p-6 border border-primary/20">
-          <div className="flex items-start justify-between mb-4">
+        {/* Genre Header - Redesigned */}
+        <div className="glass-card rounded-xl p-6 border border-primary/30 relative overflow-hidden">
+          {/* Subtle gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 pointer-events-none" />
+
+          <div className="relative flex items-start justify-between mb-4">
             <div className="flex items-center gap-4">
-              <span className="text-5xl">{genre.icon}</span>
+              <div className="text-5xl filter drop-shadow-lg">{genre.icon}</div>
               <div>
-                <h2 className="text-2xl font-bold text-foreground">{genre.name}</h2>
+                <h2 className="text-2xl font-black text-foreground tracking-tight">{genre.name}</h2>
                 <div className="flex items-center gap-3 mt-2">
                   <span className="bpm-badge">
                     {genre.bpmRange.min}–{genre.bpmRange.max} BPM
@@ -74,10 +77,10 @@ const GenreChecklist = () => {
             <div className="flex items-center gap-2">
               <button
                 onClick={() => toggleFavorite(genre.id)}
-                className={`p-2 rounded-full transition-all duration-300 ${
+                className={`p-2.5 rounded-xl transition-all duration-300 ${
                   isFavorite(genre.id)
-                    ? 'bg-accent/20 text-accent glow-accent'
-                    : 'bg-muted/50 text-muted-foreground hover:text-accent'
+                    ? 'bg-accent/20 text-accent glow-accent border border-accent/40'
+                    : 'bg-muted/30 text-muted-foreground hover:text-accent hover:bg-accent/10 border border-border/30'
                 }`}
               >
                 <Star className={`w-5 h-5 ${isFavorite(genre.id) ? 'fill-current' : ''}`} />
@@ -85,21 +88,58 @@ const GenreChecklist = () => {
               <ModeToggle isAdvanced={isAdvanced} onToggle={toggleMode} />
             </div>
           </div>
+        </div>
 
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-muted-foreground">Overall Progress</span>
+        {/* Practice Session Banner - New Concept */}
+        <div className={`rounded-xl p-4 border transition-all duration-300 ${
+          hasActiveSession
+            ? 'bg-secondary/10 border-secondary/40 glow-secondary'
+            : 'bg-muted/20 border-border/30'
+        }`}>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              {hasActiveSession ? (
+                <>
+                  <div className="w-10 h-10 rounded-lg bg-secondary/20 flex items-center justify-center">
+                    <Play className="w-5 h-5 text-secondary fill-current" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-secondary">Practice Session Active</p>
+                    <p className="text-xs text-muted-foreground">
+                      {checkedItems} of {totalItems} steps checked off
+                    </p>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="w-10 h-10 rounded-lg bg-muted/30 flex items-center justify-center">
+                    <CheckCircle2 className="w-5 h-5 text-muted-foreground" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-foreground">Ready to Practice</p>
+                    <p className="text-xs text-muted-foreground">
+                      Use checklists below to guide your mix session
+                    </p>
+                  </div>
+                </>
+              )}
+            </div>
+            {hasActiveSession && (
               <button
                 onClick={resetAll}
-                className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
+                className="btn-neon-secondary text-sm flex items-center gap-2"
               >
-                <RotateCcw className="w-3 h-3" />
-                Reset All
+                <RotateCcw className="w-4 h-4" />
+                New Session
               </button>
-            </div>
-            <ProgressBar progress={overallProgress} />
-            <p className="text-xs text-muted-foreground text-right">
-              {completedItems} of {totalItems} steps completed
+            )}
+          </div>
+
+          {/* Session tip */}
+          <div className="mt-3 pt-3 border-t border-border/20">
+            <p className="text-xs text-muted-foreground">
+              <span className="text-primary font-medium">Tip:</span> These checklists are practice guides, not achievements.
+              Check items as you practice each technique, then start fresh for your next session.
             </p>
           </div>
         </div>
