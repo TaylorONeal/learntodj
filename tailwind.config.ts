@@ -14,7 +14,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Space Grotesk', 'system-ui', 'sans-serif'],
+        sans: ['JetBrains Mono', 'monospace'],
         mono: ['JetBrains Mono', 'monospace'],
       },
       colors: {
@@ -88,6 +88,14 @@ export default {
           from: { opacity: "0" },
           to: { opacity: "1" },
         },
+        "terminal-alert-pulse": {
+          "0%, 100%": { opacity: "0.25" },
+          "50%": { opacity: "0.9" },
+        },
+        "terminal-border-flash": {
+          "0%, 100%": { opacity: "0" },
+          "50%": { opacity: "0.6" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -95,6 +103,8 @@ export default {
         "pulse-glow": "pulse-glow 2s ease-in-out infinite",
         "slide-up": "slide-up 0.4s ease-out",
         "fade-in": "fade-in 0.3s ease-out",
+        "terminal-alert-pulse": "terminal-alert-pulse 0.55s ease-in-out infinite",
+        "terminal-border-flash": "terminal-border-flash 0.55s ease-in-out infinite",
       },
     },
   },

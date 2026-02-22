@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Info, ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 
 interface TermInfoBoxProps {
   term: string;
@@ -10,21 +10,34 @@ export function TermInfoBox({ term, children }: TermInfoBoxProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="rounded-lg border border-muted/50 bg-muted/20 overflow-hidden">
+    <div
+      className="rounded border overflow-hidden transition-all duration-200"
+      style={{
+        borderColor: isOpen ? 'rgba(127,255,212,0.30)' : 'rgba(255,255,255,0.08)',
+        background: '#061116',
+      }}
+    >
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center gap-2 px-3 py-2 text-left hover:bg-muted/30 transition-colors"
+        className="w-full flex items-center gap-2 px-3 py-2 text-left transition-colors hover:bg-white/[0.02]"
       >
-        <Info className="w-4 h-4 text-accent flex-shrink-0" />
-        <span className="text-sm font-medium text-foreground flex-1">What is {term}?</span>
+        <span
+          className="text-[10px] font-mono uppercase tracking-[0.2em] flex-1"
+          style={{ color: '#7effdb' }}
+        >
+          {term}?
+        </span>
         {isOpen ? (
-          <ChevronUp className="w-4 h-4 text-muted-foreground" />
+          <ChevronUp className="w-3.5 h-3.5 flex-shrink-0" style={{ color: '#99ffe0' }} />
         ) : (
-          <ChevronDown className="w-4 h-4 text-muted-foreground" />
+          <ChevronDown className="w-3.5 h-3.5 flex-shrink-0" style={{ color: '#99ffe0' }} />
         )}
       </button>
       {isOpen && (
-        <div className="px-3 pb-3 pt-1 text-sm text-muted-foreground border-t border-muted/30 animate-fade-in">
+        <div
+          className="px-3 pb-2.5 pt-1 text-xs font-mono border-t animate-fade-in"
+          style={{ borderColor: 'rgba(255,255,255,0.06)', color: '#d8efe9' }}
+        >
           {children}
         </div>
       )}
