@@ -28,35 +28,44 @@ export function ChecklistSection({
 }: ChecklistSectionProps) {
   const [isExpanded, setIsExpanded] = useState(true);
 
-  const variantStyles = {
-    default: 'border-border/50',
-    warning: 'border-accent/30 bg-accent/5',
-    tip: 'border-secondary/30 bg-secondary/5'
-  };
+  const borderColor =
+    variant === 'warning' ? 'rgba(255, 128, 128, 0.30)' :
+    variant === 'tip' ? 'rgba(255, 214, 10, 0.25)' :
+    'rgba(127, 255, 212, 0.20)';
+
+  const iconColor =
+    variant === 'warning' ? '#ff8080' :
+    variant === 'tip' ? '#ffd60a' :
+    '#7effdb';
 
   return (
-    <div className={`glass-card rounded-xl overflow-hidden border ${variantStyles[variant]} animate-fade-in`}>
+    <div
+      className="relative rounded-lg overflow-hidden border animate-fade-in"
+      style={{ borderColor, background: '#061116' }}
+    >
+      <div className="terminal-scanlines" />
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full flex items-center justify-between p-4 hover:bg-muted/30 transition-colors"
+        className="relative w-full flex items-center justify-between px-4 py-3 transition-colors hover:bg-white/[0.02]"
       >
-        <div className="flex items-center gap-3">
-          <span className="text-primary">{icon}</span>
-          <h3 className="font-semibold text-foreground">{title}</h3>
-          <span className="text-xs font-mono text-muted-foreground">
+        <div className="flex items-center gap-2">
+          <span style={{ color: iconColor }}>{icon}</span>
+          <h3 className="text-[11px] font-mono uppercase tracking-[0.2em]" style={{ color: '#d8efe9' }}>
+            {title}
+          </h3>
+          <span className="text-[10px] font-mono" style={{ color: '#99ffe0' }}>
             {items.filter((_, i) => isChecked(i)).length}/{items.length}
           </span>
         </div>
         <ChevronDown
-          className={`w-5 h-5 text-muted-foreground transition-transform duration-200 ${
-            isExpanded ? 'rotate-180' : ''
-          }`}
+          className={`w-4 h-4 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}
+          style={{ color: '#99ffe0' }}
         />
       </button>
 
       {isExpanded && (
-        <div className="px-4 pb-4 space-y-4">
-          <div className="flex items-center gap-4">
+        <div className="relative px-4 pb-4 space-y-3">
+          <div className="flex items-center gap-3">
             <div className="flex-1">
               <ProgressBar progress={progress} />
             </div>
@@ -65,14 +74,19 @@ export function ChecklistSection({
                 e.stopPropagation();
                 onReset();
               }}
-              className="p-2 rounded-lg bg-muted/50 hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"
+              className="p-1.5 rounded border transition-all duration-200 hover:scale-105"
+              style={{
+                borderColor: 'rgba(255,255,255,0.10)',
+                background: 'rgba(0,0,0,0.30)',
+                color: '#99ffe0',
+              }}
               title="Reset section"
             >
-              <RotateCcw className="w-4 h-4" />
+              <RotateCcw className="w-3.5 h-3.5" />
             </button>
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-1.5">
             {items.map((item, index) => (
               <ChecklistItem
                 key={`${sectionKey}-${index}`}
