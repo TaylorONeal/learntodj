@@ -1,4 +1,5 @@
 import { useParams, Navigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import {
   Key,
   Gauge,
@@ -14,6 +15,7 @@ import {
   Play,
   CheckCircle2
 } from 'lucide-react';
+import { Scanlines } from '@/components/Scanlines';
 import { Header } from '@/components/Header';
 import { ModeToggle } from '@/components/ModeToggle';
 import { ChecklistSection } from '@/components/ChecklistSection';
@@ -66,8 +68,17 @@ const GenreChecklist = () => {
             boxShadow: '0 0 60px rgba(0,255,184,0.08)',
           }}
         >
-          <div className="terminal-scanlines" />
-          <div className="terminal-grain" />
+          <Scanlines />
+          {/* Grain overlay */}
+          <div
+            className="absolute inset-0 pointer-events-none opacity-30"
+            style={{
+              backgroundImage:
+                'radial-gradient(circle at 20% 20%, rgba(255,255,255,0.12) 0 1px, transparent 2px), radial-gradient(circle at 75% 70%, rgba(255,255,255,0.09) 0 1px, transparent 2px)',
+              backgroundSize: '10px 10px, 14px 14px',
+              mixBlendMode: 'screen',
+            }}
+          />
           <div className="relative p-5">
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-4">
@@ -285,29 +296,32 @@ const GenreChecklist = () => {
           variant="tip"
         />
 
-        {/* Watchouts — red alert section */}
-        <div
-          className="relative rounded-lg overflow-hidden border-2 animate-fade-in"
+        {/* Watchouts — red alert critical banner */}
+        <motion.section
+          className="relative border-2 rounded-lg overflow-hidden"
           style={{ borderColor: 'rgba(255,63,63,0.50)' }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.4 }}
         >
-          {/* Pulsing top banner */}
-          <div
-            className="px-4 py-2 text-center border-b animate-terminal-alert-pulse"
+          {/* Pulsing header */}
+          <motion.div
+            animate={{ opacity: [0.3, 1, 0.3] }}
+            transition={{ duration: 0.55, repeat: Infinity }}
+            className="px-4 py-2 text-center border-b font-mono text-[11px] uppercase tracking-[0.28em]"
             style={{
               background: '#2a0000',
               borderColor: 'rgba(255,63,63,0.40)',
               color: '#ff6060',
             }}
           >
-            <p className="text-[10px] font-mono uppercase tracking-[0.28em]">
-              ⚠ Watchouts — Avoid These Mistakes
-            </p>
-          </div>
+            ⚠ Watchouts — Avoid These Mistakes ⚠
+          </motion.div>
 
           {/* Content */}
-          <div className="p-4" style={{ background: '#150505' }}>
-            <div className="terminal-scanlines" />
-            <ul className="relative space-y-3">
+          <div className="relative p-4" style={{ background: '#150505' }}>
+            <Scanlines />
+            <ul className="relative z-10 space-y-3">
               {genre.watchouts.map((watchout, i) => (
                 <li key={i} className="flex items-start gap-3 text-sm font-mono">
                   <span
@@ -327,10 +341,12 @@ const GenreChecklist = () => {
           </div>
 
           {/* Pulsing border flash overlay */}
-          <div
-            className="absolute inset-0 border-4 border-[#ff3f3f] pointer-events-none rounded-lg animate-terminal-border-flash"
+          <motion.div
+            animate={{ opacity: [0, 0.6, 0] }}
+            transition={{ duration: 0.55, repeat: Infinity }}
+            className="absolute inset-0 border-4 border-red-500 pointer-events-none rounded-lg"
           />
-        </div>
+        </motion.section>
       </main>
     </div>
   );

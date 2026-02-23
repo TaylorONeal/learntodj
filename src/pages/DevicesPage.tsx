@@ -1,4 +1,5 @@
 import { Disc3, Monitor, Layers } from 'lucide-react';
+import { Scanlines } from '@/components/Scanlines';
 import { Header } from '@/components/Header';
 
 const DevicesPage = () => {
@@ -22,7 +23,7 @@ const DevicesPage = () => {
           className="relative rounded-lg overflow-hidden border p-4 space-y-3"
           style={{ borderColor: 'rgba(127,255,212,0.30)', background: '#061116' }}
         >
-          <div className="terminal-scanlines" />
+          <Scanlines />
           <div className="relative">
             <div className="flex items-center gap-2 mb-2">
               <Disc3 className="w-4 h-4" style={{ color: '#7effdb' }} />
@@ -67,7 +68,7 @@ const DevicesPage = () => {
           className="relative rounded-lg overflow-hidden border p-4 space-y-3"
           style={{ borderColor: 'rgba(255,214,10,0.25)', background: '#061116' }}
         >
-          <div className="terminal-scanlines" />
+          <Scanlines />
           <div className="relative">
             <div className="flex items-center gap-2 mb-2">
               <Monitor className="w-4 h-4" style={{ color: '#ffd60a' }} />
@@ -112,7 +113,7 @@ const DevicesPage = () => {
           className="relative rounded-lg overflow-hidden border p-4 space-y-3"
           style={{ borderColor: 'rgba(255,128,128,0.25)', background: '#061116' }}
         >
-          <div className="terminal-scanlines" />
+          <Scanlines />
           <div className="relative">
             <div className="flex items-center gap-2 mb-2">
               <Layers className="w-4 h-4" style={{ color: '#ff8080' }} />
@@ -161,7 +162,7 @@ const DevicesPage = () => {
             className="relative rounded-lg overflow-hidden border"
             style={{ borderColor: 'rgba(255,255,255,0.10)', background: '#061116' }}
           >
-            <div className="terminal-scanlines" />
+            <Scanlines />
             <div className="relative overflow-x-auto">
               <table className="w-full text-xs font-mono">
                 <thead>
@@ -198,7 +199,7 @@ const DevicesPage = () => {
           className="relative rounded-lg overflow-hidden border p-4"
           style={{ borderColor: 'rgba(255,255,255,0.10)', background: '#061116' }}
         >
-          <div className="terminal-scanlines" />
+          <Scanlines />
           <div className="relative space-y-2">
             <h3 className="text-[11px] font-mono uppercase tracking-[0.2em]" style={{ color: '#ffd60a' }}>
               Upgrade Path

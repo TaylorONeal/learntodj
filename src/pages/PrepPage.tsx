@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Scanlines } from '@/components/Scanlines';
 import { CheckCircle2, Headphones } from 'lucide-react';
 import { Header } from '@/components/Header';
 import { TermInfoBox } from '@/components/TermInfoBox';
@@ -32,7 +33,7 @@ const PrepPage = () => {
           className="relative rounded-lg overflow-hidden border"
           style={{ borderColor: 'rgba(127,255,212,0.25)', background: '#061116' }}
         >
-          <div className="terminal-scanlines" />
+          <Scanlines />
           <div className="relative p-4 space-y-3">
             <h2 className="text-[11px] font-mono uppercase tracking-[0.2em] flex items-center gap-2" style={{ color: '#7effdb' }}>
               <CheckCircle2 className="w-4 h-4" />

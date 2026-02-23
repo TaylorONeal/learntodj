@@ -50,6 +50,11 @@
     --border-red: rgba(255, 63, 63, 0.40);
     --border-subtle: rgba(255, 255, 255, 0.10);
 
+    /* Background alt */
+    --terminal-bg-alt: #0f0907;   /* warm / alert mode */
+    --warn-bg: #2a0b0b;
+    --critical-bg: #2a0000;
+
     /* Text tokens */
     --text-body: #d8efe9;
     --text-muted: #99ffe0;
@@ -57,6 +62,9 @@
     --text-teal: #7effdb;
     --text-red: #ff8080;
     --text-red-bright: #ff6060;
+    --text-highlight: #ffeaa0;
+    --warn-text: #ffb3b3;
+    --critical-text: #ff6060;
 
     --gradient-primary: linear-gradient(135deg, #7effdb, #00f5d4);
     --gradient-card: radial-gradient(circle at top, rgba(0,255,184,0.14), transparent 50%),
