@@ -6,6 +6,7 @@ import { SearchBar } from '@/components/SearchBar';
 import { ModeToggle } from '@/components/ModeToggle';
 import { GenreListItem } from '@/components/GenreListItem';
 import { InstallPWA } from '@/components/InstallPWA';
+import { Scanlines } from '@/components/Scanlines';
 import { genres } from '@/data/genres';
 import { useFavorites } from '@/hooks/useFavorites';
 import { useAdvancedMode } from '@/hooks/useAdvancedMode';
@@ -54,7 +55,7 @@ const Index = () => {
             background: 'rgba(0,0,0,0.40)',
           }}
         >
-          <div className="terminal-scanlines" />
+          <Scanlines />
           <div className="px-4 py-3 text-center relative">
             <p className="text-[10px] font-mono uppercase tracking-[0.25em] mb-1.5" style={{ color: '#ffd60a' }}>
               Core Principle
@@ -80,7 +81,7 @@ const Index = () => {
                 background: 'radial-gradient(circle at top left, rgba(0,255,184,0.10), transparent 60%), #061116',
               }}
             >
-              <div className="terminal-scanlines" />
+              <Scanlines />
               <div className="relative p-5 flex items-center gap-4">
                 <div
                   className="w-12 h-12 rounded flex items-center justify-center flex-shrink-0 border transition-all duration-300 group-hover:scale-110"
@@ -112,7 +113,7 @@ const Index = () => {
                 background: 'radial-gradient(circle at top left, rgba(255,214,10,0.08), transparent 60%), #061116',
               }}
             >
-              <div className="terminal-scanlines" />
+              <Scanlines />
               <div className="relative p-5 flex items-center gap-4">
                 <div
                   className="w-12 h-12 rounded flex items-center justify-center flex-shrink-0 border transition-all duration-300 group-hover:scale-110"
@@ -155,7 +156,7 @@ const Index = () => {
                 className="group relative rounded-lg overflow-hidden border p-4 transition-all duration-300 hover:scale-[1.02]"
                 style={{ borderColor, background: '#061116' }}
               >
-                <div className="terminal-scanlines" />
+                <Scanlines />
                 <div className="relative">
                   <Icon className="w-5 h-5 mb-2 transition-transform group-hover:scale-110" style={{ color }} />
                   <h3 className="font-bold font-mono text-sm uppercase tracking-[0.08em]" style={{ color: '#d8efe9' }}>

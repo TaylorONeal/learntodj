@@ -1,4 +1,5 @@
 import { Star, ChevronRight } from 'lucide-react';
+import { Scanlines } from '@/components/Scanlines';
 import { Link } from 'react-router-dom';
 import type { Genre } from '@/data/genres';
 
@@ -18,7 +19,7 @@ export function GenreCard({ genre, isFavorite, onToggleFavorite }: GenreCardProp
         boxShadow: '0 0 60px rgba(0,255,184,0.08)',
       }}
     >
-      <div className="terminal-scanlines" />
+      <Scanlines />
       <div className="relative p-5">
         <div className="flex items-start justify-between mb-3">
           <div className="flex items-center gap-3">
