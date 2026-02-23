@@ -1,4 +1,5 @@
 import { useLocation } from "react-router-dom";
+import { Scanlines } from '@/components/Scanlines';
 import { useEffect } from "react";
 
 const NotFound = () => {
@@ -13,7 +14,7 @@ const NotFound = () => {
       className="flex min-h-screen items-center justify-center relative"
       style={{ background: '#0a0a0c' }}
     >
-      <div className="terminal-scanlines" />
+      <Scanlines />
       <div className="relative text-center space-y-4">
         <p className="text-[10px] font-mono uppercase tracking-[0.35em]" style={{ color: '#99ffe0' }}>
           System Error // Route Not Found

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Scanlines } from '@/components/Scanlines';
 import { genres } from '@/data/genres';
 import { TrackFlowTimeline, TrackSection } from '@/components/TrackFlowTimeline';
 import { Header } from '@/components/Header';
@@ -36,7 +37,7 @@ const TrackFlowsPage = () => {
           className="relative rounded-lg overflow-hidden border p-4"
           style={{ borderColor: 'rgba(127,255,212,0.20)', background: '#061116' }}
         >
-          <div className="terminal-scanlines" />
+          <Scanlines />
           <div className="relative">
             <h2 className="text-[11px] font-mono uppercase tracking-[0.2em] mb-3" style={{ color: '#7effdb' }}>
               Section Types
@@ -66,7 +67,7 @@ const TrackFlowsPage = () => {
               className="block relative rounded-lg overflow-hidden border p-4 transition-all duration-300 group hover:scale-[1.005]"
               style={{ borderColor: 'rgba(127,255,212,0.20)', background: '#061116' }}
             >
-              <div className="terminal-scanlines" />
+              <Scanlines />
               <div className="relative">
                 <div className="flex items-center gap-2 mb-3">
                   <span className="text-lg">{genre.icon}</span>
