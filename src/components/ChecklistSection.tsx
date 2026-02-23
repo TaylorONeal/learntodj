@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { ChevronDown, RotateCcw } from 'lucide-react';
 import { ChecklistItem } from './ChecklistItem';
 import { ProgressBar } from './ProgressBar';
+import { Scanlines } from './Scanlines';
 
 interface ChecklistSectionProps {
   title: string;
@@ -43,10 +44,20 @@ export function ChecklistSection({
       className="relative rounded-lg overflow-hidden border animate-fade-in"
       style={{ borderColor, background: '#061116' }}
     >
-      <div className="terminal-scanlines" />
+      <Scanlines />
+      {/* Grain overlay */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-30"
+        style={{
+          backgroundImage:
+            'radial-gradient(circle at 20% 20%, rgba(255,255,255,0.12) 0 1px, transparent 2px), radial-gradient(circle at 75% 70%, rgba(255,255,255,0.09) 0 1px, transparent 2px)',
+          backgroundSize: '10px 10px, 14px 14px',
+          mixBlendMode: 'screen',
+        }}
+      />
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="relative w-full flex items-center justify-between px-4 py-3 transition-colors hover:bg-white/[0.02]"
+        className="relative z-10 w-full flex items-center justify-between px-4 py-3 transition-colors hover:bg-white/[0.02]"
       >
         <div className="flex items-center gap-2">
           <span style={{ color: iconColor }}>{icon}</span>
@@ -64,7 +75,7 @@ export function ChecklistSection({
       </button>
 
       {isExpanded && (
-        <div className="relative px-4 pb-4 space-y-3">
+        <div className="relative z-10 px-4 pb-4 space-y-3">
           <div className="flex items-center gap-3">
             <div className="flex-1">
               <ProgressBar progress={progress} />

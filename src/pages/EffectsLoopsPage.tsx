@@ -1,4 +1,5 @@
 import { Waves, Repeat, Sliders } from 'lucide-react';
+import { Scanlines } from '@/components/Scanlines';
 import { Header } from '@/components/Header';
 
 const cardStyle = {
@@ -65,7 +66,7 @@ const EffectsLoopsPage = () => {
                 className="relative rounded border p-3 overflow-hidden"
                 style={cardStyle}
               >
-                <div className="terminal-scanlines" />
+                <Scanlines />
                 <div className="relative">
                   <h3 className="text-[11px] font-mono uppercase tracking-[0.15em] mb-1" style={{ color: '#d8efe9' }}>
                     {item.title}
@@ -106,7 +107,7 @@ const EffectsLoopsPage = () => {
                 className="relative rounded border p-3 overflow-hidden"
                 style={{ borderColor: 'rgba(255,214,10,0.20)', background: '#061116' }}
               >
-                <div className="terminal-scanlines" />
+                <Scanlines />
                 <div className="relative">
                   <h3 className="text-[11px] font-mono uppercase tracking-[0.15em] mb-1" style={{ color: '#d8efe9' }}>
                     {item.title}
@@ -123,7 +124,7 @@ const EffectsLoopsPage = () => {
           className="relative rounded-lg overflow-hidden border p-4 space-y-3"
           style={{ borderColor: 'rgba(127,255,212,0.25)', background: '#061116' }}
         >
-          <div className="terminal-scanlines" />
+          <Scanlines />
           <div className="relative">
             <div className="flex items-center gap-2 mb-3">
               <Sliders className="w-4 h-4" style={{ color: '#7effdb' }} />

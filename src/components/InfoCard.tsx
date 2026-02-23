@@ -1,3 +1,5 @@
+import { Scanlines } from './Scanlines';
+
 interface InfoCardProps {
   title: string;
   icon: React.ReactNode;
@@ -34,8 +36,18 @@ export function InfoCard({ title, icon, children, variant = 'default' }: InfoCar
           : 'none',
       }}
     >
-      <div className="terminal-scanlines" />
-      <div className="relative p-4">
+      <Scanlines />
+      {/* Grain overlay */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-30"
+        style={{
+          backgroundImage:
+            'radial-gradient(circle at 20% 20%, rgba(255,255,255,0.12) 0 1px, transparent 2px), radial-gradient(circle at 75% 70%, rgba(255,255,255,0.09) 0 1px, transparent 2px)',
+          backgroundSize: '10px 10px, 14px 14px',
+          mixBlendMode: 'screen',
+        }}
+      />
+      <div className="relative z-10 p-4">
         <div className="flex items-center gap-2 mb-3">
           <span style={{ color: iconColor }}>{icon}</span>
           <h3
