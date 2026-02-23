@@ -23,7 +23,16 @@ export function GenreCard({ genre, isFavorite, onToggleFavorite }: GenreCardProp
       <div className="relative p-5">
         <div className="flex items-start justify-between mb-3">
           <div className="flex items-center gap-3">
-            <span className="text-3xl">{genre.icon}</span>
+            <div
+              className="flex items-center justify-center rounded border text-[10px] font-mono font-bold tracking-[0.14em] px-2.5 py-1.5"
+              style={{
+                borderColor: 'rgba(127,255,212,0.35)',
+                background: 'rgba(127,255,212,0.08)',
+                color: '#7effdb',
+              }}
+            >
+              {genre.icon}
+            </div>
             <div>
               <h3 className="font-bold font-mono uppercase tracking-[0.08em]" style={{ color: '#d8efe9' }}>
                 {genre.name}

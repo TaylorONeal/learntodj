@@ -82,7 +82,17 @@ const GenreChecklist = () => {
           <div className="relative p-5">
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-4">
-                <div className="text-4xl filter drop-shadow-lg">{genre.icon}</div>
+                <div
+                  className="flex items-center justify-center rounded border text-[13px] font-mono font-bold tracking-[0.16em] px-3 py-2"
+                  style={{
+                    borderColor: 'rgba(127,255,212,0.40)',
+                    background: 'rgba(127,255,212,0.08)',
+                    color: '#7effdb',
+                    boxShadow: '0 0 16px rgba(0,255,184,0.12)',
+                  }}
+                >
+                  {genre.icon}
+                </div>
                 <div>
                   <p className="text-[10px] font-mono uppercase tracking-[0.25em] mb-1" style={{ color: '#99ffe0' }}>
                     Genre // Practice Guide
@@ -315,7 +325,7 @@ const GenreChecklist = () => {
               color: '#ff6060',
             }}
           >
-            ⚠ Watchouts — Avoid These Mistakes ⚠
+            !! WATCHOUTS — AVOID THESE MISTAKES !!
           </motion.div>
 
           {/* Content */}
