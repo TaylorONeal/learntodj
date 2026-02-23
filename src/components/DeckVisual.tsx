@@ -1,347 +1,393 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { motion } from 'framer-motion';
 import { Volume2, Radio } from 'lucide-react';
 
-type TransitionPhase = 'prep' | 'start' | 'blend' | 'swap' | 'exit' | 'done';
+// --- Timeline ---
+// Each keyframe defines deck states at a point in time.
+// lf/rf = fader (0-100), lb/rb = bass (0-100), lfi/rfi = filter (0-100, 50=neutral)
+type Keyframe = {
+  t: number;
+  phase: string;
+  tip: string;
+  lf: number; lb: number; lfi: number;
+  rf: number; rb: number; rfi: number;
+};
 
-interface DeckState {
-  fader: number; // 0-100
-  bass: number; // 0-100 (100 = full, 0 = cut)
-  filter: number; // 0-100 (50 = neutral)
-  active: boolean;
+const TIMELINE: Keyframe[] = [
+  { t: 0,     phase: 'Prep',      tip: 'Cue incoming in headphones — fader down, bass cut',  lf: 100, lb: 100, lfi: 50, rf: 0,   rb: 0,   rfi: 50 },
+  { t: 2000,  phase: 'Drop In',   tip: 'Start incoming on phrase boundary',                   lf: 100, lb: 100, lfi: 50, rf: 20,  rb: 0,   rfi: 50 },
+  { t: 4500,  phase: 'Blend',     tip: 'Raise incoming fader over 4-8 bars',                  lf: 100, lb: 100, lfi: 50, rf: 75,  rb: 0,   rfi: 50 },
+  { t: 6500,  phase: 'Cut Bass',  tip: 'Kill outgoing bass on phrase — never two basses',     lf: 100, lb: 0,   lfi: 50, rf: 80,  rb: 0,   rfi: 50 },
+  { t: 7500,  phase: 'Bass Swap', tip: 'Open incoming bass immediately after the cut',         lf: 90,  lb: 0,   lfi: 50, rf: 85,  rb: 100, rfi: 50 },
+  { t: 9500,  phase: 'Exit',      tip: 'Filter hi-pass and fade outgoing out',                lf: 25,  lb: 0,   lfi: 78, rf: 100, rb: 100, rfi: 50 },
+  { t: 12000, phase: 'Complete',  tip: 'Incoming owns the room',                              lf: 0,   lb: 0,   lfi: 50, rf: 100, rb: 100, rfi: 50 },
+];
+
+const TOTAL_MS = TIMELINE[TIMELINE.length - 1].t + 500;
+
+function easeInOut(t: number) {
+  return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
 }
 
-const phaseDescriptions: Record<TransitionPhase, { title: string; description: string; tip: string }> = {
-  prep: { title: 'Prep', description: 'Incoming ready: fader down, bass cut, filter neutral', tip: 'Cue in headphones' },
-  start: { title: 'Start on Phrase', description: 'Begin incoming track on phrase boundary', tip: 'Wait for the 1' },
-  blend: { title: 'Blend (4-8 bars)', description: 'Raise incoming fader gradually', tip: 'Let it breathe' },
-  swap: { title: 'Bass Swap', description: 'Cut outgoing bass, bring in incoming bass', tip: 'The key moment' },
-  exit: { title: 'Exit Outgoing', description: 'Fade or filter out the old track', tip: 'Smooth exit' },
-  done: { title: 'Complete', description: 'Incoming track fully in control', tip: 'New track owns the room' }
+function lerp(a: number, b: number, t: number) {
+  return a + (b - a) * Math.max(0, Math.min(1, t));
+}
+
+type LiveState = {
+  lf: number; lb: number; lfi: number;
+  rf: number; rb: number; rfi: number;
+  phase: string; tip: string;
+  progress: number; // 0-1 overall
 };
 
-const phaseStates: Record<TransitionPhase, { left: DeckState; right: DeckState }> = {
-  prep: {
-    left: { fader: 100, bass: 100, filter: 50, active: true },
-    right: { fader: 0, bass: 0, filter: 50, active: false }
-  },
-  start: {
-    left: { fader: 100, bass: 100, filter: 50, active: true },
-    right: { fader: 20, bass: 0, filter: 50, active: true }
-  },
-  blend: {
-    left: { fader: 100, bass: 100, filter: 50, active: true },
-    right: { fader: 60, bass: 0, filter: 50, active: true }
-  },
-  swap: {
-    left: { fader: 100, bass: 0, filter: 50, active: true },
-    right: { fader: 80, bass: 100, filter: 50, active: true }
-  },
-  exit: {
-    left: { fader: 40, bass: 0, filter: 80, active: true },
-    right: { fader: 100, bass: 100, filter: 50, active: true }
-  },
-  done: {
-    left: { fader: 0, bass: 0, filter: 50, active: false },
-    right: { fader: 100, bass: 100, filter: 50, active: true }
+function getStateAt(ms: number): LiveState {
+  const clamped = Math.max(0, Math.min(ms, TOTAL_MS));
+
+  let k0 = TIMELINE[0];
+  let k1 = TIMELINE[1];
+  for (let i = 0; i < TIMELINE.length - 1; i++) {
+    if (clamped >= TIMELINE[i].t && clamped <= TIMELINE[i + 1].t) {
+      k0 = TIMELINE[i];
+      k1 = TIMELINE[i + 1];
+      break;
+    }
   }
-};
+  if (clamped >= TIMELINE[TIMELINE.length - 1].t) {
+    k0 = k1 = TIMELINE[TIMELINE.length - 1];
+  }
 
-const phases: TransitionPhase[] = ['prep', 'start', 'blend', 'swap', 'exit', 'done'];
+  const segLen = k1.t - k0.t || 1;
+  const rawT = (clamped - k0.t) / segLen;
+  const easedT = easeInOut(rawT);
+
+  // Bass swap segment: bass changes snap faster than everything else
+  const isBassPhase = k0.phase === 'Cut Bass' || k0.phase === 'Bass Swap';
+  const bassT = isBassPhase
+    ? (rawT < 0.15 ? 0 : easeInOut(Math.min(1, (rawT - 0.15) / 0.35)))
+    : easedT;
+
+  return {
+    lf:  lerp(k0.lf,  k1.lf,  easedT),
+    lb:  lerp(k0.lb,  k1.lb,  bassT),
+    lfi: lerp(k0.lfi, k1.lfi, easedT),
+    rf:  lerp(k0.rf,  k1.rf,  easedT),
+    rb:  lerp(k0.rb,  k1.rb,  bassT),
+    rfi: lerp(k0.rfi, k1.rfi, easedT),
+    phase: k0.phase,
+    tip: k0.tip,
+    progress: clamped / TOTAL_MS,
+  };
+}
+
+// --- Component ---
 
 export function DeckVisual() {
-  const [currentPhase, setCurrentPhase] = useState<TransitionPhase>('prep');
+  const [ms, setMs] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+  const startRef = useRef<number | null>(null);
+  const rafRef = useRef<number | null>(null);
 
-  useEffect(() => {
-    if (!isPlaying) return;
-    
-    const currentIndex = phases.indexOf(currentPhase);
-    if (currentIndex >= phases.length - 1) {
+  const tick = useCallback((now: number) => {
+    if (startRef.current === null) startRef.current = now;
+    const elapsed = now - startRef.current;
+    if (elapsed >= TOTAL_MS) {
+      setMs(TOTAL_MS);
       setIsPlaying(false);
       return;
     }
+    setMs(elapsed);
+    rafRef.current = requestAnimationFrame(tick);
+  }, []);
 
-    const timer = setTimeout(() => {
-      setCurrentPhase(phases[currentIndex + 1]);
-    }, 2000);
-
-    return () => clearTimeout(timer);
-  }, [currentPhase, isPlaying]);
-
-  const handlePlay = () => {
-    setCurrentPhase('prep');
+  const handlePlay = useCallback(() => {
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    startRef.current = null;
+    setMs(0);
     setIsPlaying(true);
-  };
+    rafRef.current = requestAnimationFrame(tick);
+  }, [tick]);
 
-  const handlePhaseClick = (phase: TransitionPhase) => {
-    setIsPlaying(false);
-    setCurrentPhase(phase);
-  };
+  useEffect(() => () => {
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+  }, []);
 
-  const state = phaseStates[currentPhase];
+  const s = getStateAt(ms);
 
-  const phaseIndex = phases.indexOf(currentPhase);
+  // Crossfader: 0 = full A, 100 = full B
+  const totalF = s.lf + s.rf || 1;
+  const crossPos = (s.rf / totalF) * 100;
+
+  const isBassSwap = s.phase === 'Bass Swap' || s.phase === 'Cut Bass';
 
   return (
-    <div className="space-y-6">
-      {/* Phase Timeline - Enhanced */}
-      <div className="relative">
-        {/* Progress track */}
-        <div className="absolute top-1/2 left-0 right-0 h-1 bg-muted/30 rounded-full -translate-y-1/2" />
+    <div className="space-y-5 font-mono">
+
+      {/* Progress bar */}
+      <div className="space-y-1.5">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] uppercase tracking-[0.2em]" style={{ color: '#99ffe0' }}>
+            {s.phase}
+          </span>
+          <span className="text-[10px]" style={{ color: 'rgba(153,255,224,0.45)' }}>
+            {Math.round(s.progress * 100)}%
+          </span>
+        </div>
+        <div className="h-1 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.06)' }}>
+          <motion.div
+            className="h-full rounded-full"
+            style={{
+              width: `${s.progress * 100}%`,
+              background: 'linear-gradient(90deg, #7effdb, #ffd60a)',
+            }}
+            transition={{ duration: 0 }}
+          />
+        </div>
+        <p className="text-[10px] uppercase tracking-[0.15em]" style={{ color: 'rgba(153,255,224,0.55)' }}>
+          {s.tip}
+        </p>
+      </div>
+
+      {/* Phase stepper */}
+      <div className="flex items-center justify-between relative">
         <div
-          className="absolute top-1/2 left-0 h-1 bg-gradient-to-r from-primary to-secondary rounded-full -translate-y-1/2 transition-all duration-500"
-          style={{ width: `${(phaseIndex / (phases.length - 1)) * 100}%` }}
+          className="absolute top-3 left-3 right-3 h-px"
+          style={{ background: 'rgba(255,255,255,0.08)' }}
         />
-
-        <div className="relative flex items-center justify-between">
-          {phases.map((phase, i) => {
-            const isActive = currentPhase === phase;
-            const isPast = phaseIndex > i;
-            return (
-              <button
-                key={phase}
-                onClick={() => handlePhaseClick(phase)}
-                className={`relative z-10 flex flex-col items-center gap-1 transition-all duration-300 ${
-                  isActive ? 'scale-110' : 'hover:scale-105'
-                }`}
+        <div
+          className="absolute top-3 left-3 h-px transition-all duration-150"
+          style={{
+            width: `calc(${s.progress * 100}% - 6px)`,
+            background: 'linear-gradient(90deg, #7effdb, #ffd60a)',
+          }}
+        />
+        {TIMELINE.map((kf, i) => {
+          const past = ms > kf.t;
+          const active = s.phase === kf.phase;
+          return (
+            <div key={kf.phase} className="relative z-10 flex flex-col items-center gap-1">
+              <div
+                className="w-6 h-6 rounded-full flex items-center justify-center text-[9px] font-bold border transition-all duration-300"
+                style={{
+                  background: active
+                    ? '#ffd60a'
+                    : past ? 'rgba(126,255,219,0.20)' : 'rgba(0,0,0,0.60)',
+                  borderColor: active
+                    ? '#ffd60a'
+                    : past ? 'rgba(126,255,219,0.50)' : 'rgba(255,255,255,0.12)',
+                  color: active ? '#0a0a0c' : past ? '#7effdb' : 'rgba(153,255,224,0.40)',
+                  boxShadow: active ? '0 0 12px rgba(255,214,10,0.50)' : undefined,
+                }}
               >
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 ${
-                  isActive
-                    ? 'bg-secondary text-secondary-foreground glow-secondary'
-                    : isPast
-                      ? 'bg-primary/80 text-primary-foreground'
-                      : 'bg-muted text-muted-foreground hover:bg-muted/80'
-                }`}>
-                  {i + 1}
-                </div>
-                <span className={`text-[10px] font-medium whitespace-nowrap transition-colors ${
-                  isActive ? 'text-secondary' : isPast ? 'text-primary' : 'text-muted-foreground'
-                }`}>
-                  {phaseDescriptions[phase].title}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Phase Description - Enhanced */}
-      <div className="text-center p-4 rounded-xl bg-secondary/10 border border-secondary/30 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-secondary/5 via-transparent to-primary/5" />
-        <div className="relative">
-          <p className="font-bold text-lg text-foreground">{phaseDescriptions[currentPhase].title}</p>
-          <p className="text-sm text-muted-foreground mt-1">{phaseDescriptions[currentPhase].description}</p>
-          <p className="text-xs text-secondary mt-2 font-medium">💡 {phaseDescriptions[currentPhase].tip}</p>
-        </div>
-      </div>
-
-      {/* Deck Visualization - Enhanced with crossfader */}
-      <div className="space-y-4">
-        <div className="grid grid-cols-2 gap-4">
-          {/* Left Deck (Outgoing) */}
-          <DeckPanel
-            label="OUTGOING"
-            sublabel="Deck A"
-            trackKey="8A"
-            state={state.left}
-            color="primary"
-          />
-
-          {/* Right Deck (Incoming) */}
-          <DeckPanel
-            label="INCOMING"
-            sublabel="Deck B"
-            trackKey="8A"
-            state={state.right}
-            color="secondary"
-          />
-        </div>
-
-        {/* Crossfader visualization */}
-        <div className="px-4 py-3 rounded-lg bg-muted/20 border border-border/30">
-          <div className="flex items-center justify-between text-xs text-muted-foreground mb-2">
-            <span className="text-primary font-medium">A</span>
-            <span className="font-medium">CROSSFADER</span>
-            <span className="text-secondary font-medium">B</span>
-          </div>
-          <div className="relative h-3 bg-muted/50 rounded-full">
-            <div className="absolute inset-y-0 left-1/2 w-px bg-muted-foreground/30" />
-            <div
-              className="absolute top-1/2 -translate-y-1/2 w-6 h-5 rounded bg-foreground transition-all duration-500 flex items-center justify-center"
-              style={{
-                left: `calc(${(state.right.fader / (state.left.fader + state.right.fader || 1)) * 100}% - 12px)`
-              }}
-            >
-              <div className="w-1 h-3 rounded-full bg-muted" />
+                {i + 1}
+              </div>
             </div>
+          );
+        })}
+      </div>
+
+      {/* Decks */}
+      <div className="grid grid-cols-2 gap-3">
+        {/* Outgoing — gold */}
+        <DeckPanel
+          label="OUTGOING"
+          sub="Deck A"
+          fader={s.lf}
+          bass={s.lb}
+          filter={s.lfi}
+          accentColor="#ffd60a"
+          accentRgb="255,214,10"
+          bassPhase={isBassSwap}
+        />
+        {/* Incoming — teal */}
+        <DeckPanel
+          label="INCOMING"
+          sub="Deck B"
+          fader={s.rf}
+          bass={s.rb}
+          filter={s.rfi}
+          accentColor="#7effdb"
+          accentRgb="126,255,219"
+          bassPhase={isBassSwap}
+        />
+      </div>
+
+      {/* Crossfader */}
+      <div
+        className="px-4 py-3 rounded-lg border"
+        style={{ background: 'rgba(0,0,0,0.35)', borderColor: 'rgba(255,255,255,0.08)' }}
+      >
+        <div className="flex items-center justify-between text-[9px] uppercase tracking-[0.18em] mb-2.5">
+          <span style={{ color: '#ffd60a' }}>A — OUT</span>
+          <span style={{ color: 'rgba(153,255,224,0.50)' }}>Crossfader</span>
+          <span style={{ color: '#7effdb' }}>IN — B</span>
+        </div>
+        <div
+          className="relative h-3 rounded-full"
+          style={{ background: 'rgba(255,255,255,0.06)' }}
+        >
+          {/* Center mark */}
+          <div
+            className="absolute inset-y-0 left-1/2 w-px"
+            style={{ background: 'rgba(255,255,255,0.15)' }}
+          />
+          {/* Thumb */}
+          <div
+            className="absolute top-1/2 -translate-y-1/2 w-5 h-4 rounded transition-none flex items-center justify-center"
+            style={{
+              left: `calc(${crossPos}% - 10px)`,
+              background: '#d8efe9',
+              boxShadow: '0 0 8px rgba(255,255,255,0.25)',
+            }}
+          >
+            <div className="w-0.5 h-2 rounded-full" style={{ background: 'rgba(0,0,0,0.40)' }} />
           </div>
         </div>
       </div>
 
-      {/* Play Button - Enhanced */}
+      {/* Play button */}
       <div className="text-center">
         <button
           onClick={handlePlay}
           disabled={isPlaying}
-          className={`px-8 py-3 rounded-full font-bold transition-all duration-300 ${
-            isPlaying
-              ? 'bg-secondary/50 text-secondary-foreground/70 cursor-not-allowed'
-              : 'btn-neon-secondary hover:scale-105'
-          }`}
+          className="px-6 py-2.5 rounded border text-[11px] uppercase tracking-[0.2em] transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed hover:scale-[1.02]"
+          style={{
+            borderColor: isPlaying ? 'rgba(255,255,255,0.15)' : 'rgba(255,214,10,0.40)',
+            background: isPlaying ? 'rgba(0,0,0,0.30)' : 'rgba(255,214,10,0.06)',
+            color: isPlaying ? '#99ffe0' : '#ffd60a',
+          }}
         >
           {isPlaying ? (
             <span className="flex items-center gap-2">
-              <Radio className="w-4 h-4 animate-pulse" />
-              Playing...
+              <Radio className="w-3.5 h-3.5 animate-pulse" />
+              Transitioning...
             </span>
           ) : (
             <span className="flex items-center gap-2">
-              <Volume2 className="w-4 h-4" />
+              <Volume2 className="w-3.5 h-3.5" />
               Play Transition
             </span>
           )}
         </button>
       </div>
-
-      {/* Legend - Enhanced */}
-      <div className="flex justify-center gap-6 text-xs text-muted-foreground">
-        <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded bg-foreground" />
-          <span>Volume</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded bg-primary glow-primary" />
-          <span>Bass</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded bg-accent glow-accent" />
-          <span>Filter</span>
-        </div>
-      </div>
     </div>
   );
 }
 
+// --- Deck Panel ---
+
 interface DeckPanelProps {
   label: string;
-  sublabel: string;
-  trackKey: string;
-  state: DeckState;
-  color: 'primary' | 'secondary';
+  sub: string;
+  fader: number;
+  bass: number;
+  filter: number;
+  accentColor: string;
+  accentRgb: string;
+  bassPhase: boolean;
 }
 
-function DeckPanel({ label, sublabel, trackKey, state, color }: DeckPanelProps) {
-  const isPrimary = color === 'primary';
-  const colorClass = isPrimary ? 'border-primary/40' : 'border-secondary/40';
-  const bgClass = isPrimary ? 'bg-primary/5' : 'bg-secondary/5';
-  const textClass = isPrimary ? 'text-primary' : 'text-secondary';
-  const glowClass = isPrimary ? 'glow-primary' : 'glow-secondary';
-
-  const getStatusInfo = () => {
-    if (state.fader === 0) return { icon: '○', text: 'STANDBY', class: 'text-muted-foreground' };
-    if (state.fader === 100) return { icon: '●', text: 'LIVE', class: textClass };
-    return { icon: '◐', text: 'FADING', class: 'text-accent' };
-  };
-
-  const status = getStatusInfo();
+function DeckPanel({ label, sub, fader, bass, filter, accentColor, accentRgb, bassPhase }: DeckPanelProps) {
+  const live = fader > 1;
+  const filterLabel = filter < 47 ? 'LO-PASS' : filter > 53 ? 'HI-PASS' : 'NEUTRAL';
 
   return (
-    <div className={`deck-panel ${colorClass} ${bgClass} transition-all duration-500 ${
-      state.active ? `opacity-100 ${state.fader === 100 ? glowClass : ''}` : 'opacity-40'
-    }`}>
-      {/* Ambient glow overlay */}
-      {state.active && state.fader > 0 && (
-        <div
-          className={`absolute inset-0 rounded-xl transition-opacity duration-500 ${
-            isPrimary ? 'bg-primary/5' : 'bg-secondary/5'
-          }`}
-          style={{ opacity: state.fader / 100 }}
-        />
-      )}
-
+    <div
+      className="relative rounded-lg p-3 border transition-all duration-300 overflow-hidden"
+      style={{
+        borderColor: live ? `rgba(${accentRgb}, 0.35)` : 'rgba(255,255,255,0.08)',
+        background: live ? `rgba(${accentRgb}, 0.04)` : 'rgba(0,0,0,0.30)',
+        boxShadow: fader > 80 ? `0 0 30px rgba(${accentRgb}, 0.10)` : 'none',
+        opacity: live ? 1 : 0.5,
+      }}
+    >
       {/* Header */}
-      <div className="relative flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-3">
         <div>
-          <p className={`text-xs font-black uppercase tracking-wider ${textClass}`}>{label}</p>
-          <p className="text-[10px] text-muted-foreground font-medium">{sublabel}</p>
+          <p className="text-[10px] font-bold uppercase tracking-[0.18em]" style={{ color: accentColor }}>
+            {label}
+          </p>
+          <p className="text-[9px] uppercase tracking-[0.12em]" style={{ color: 'rgba(153,255,224,0.45)' }}>
+            {sub}
+          </p>
         </div>
-        <div className={`px-2 py-1 rounded-md text-xs font-mono font-bold ${textClass} bg-background/60 border ${colorClass}`}>
-          {trackKey}
-        </div>
-      </div>
-
-      {/* Controls */}
-      <div className="relative space-y-3">
-        {/* Fader/Volume */}
-        <div className="space-y-1.5">
-          <div className="flex justify-between text-xs">
-            <span className="text-muted-foreground font-medium">Volume</span>
-            <span className="text-foreground font-bold font-mono">{state.fader}%</span>
-          </div>
-          <div className="h-2.5 bg-muted/30 rounded-full overflow-hidden border border-border/20">
-            <div
-              className="h-full bg-foreground rounded-full transition-all duration-500"
-              style={{ width: `${state.fader}%` }}
-            />
-          </div>
-        </div>
-
-        {/* Bass EQ */}
-        <div className="space-y-1.5">
-          <div className="flex justify-between text-xs">
-            <span className="text-muted-foreground font-medium">Bass</span>
-            <span className={`font-bold font-mono ${state.bass === 0 ? 'text-destructive' : 'text-primary'}`}>
-              {state.bass === 0 ? 'CUT' : state.bass === 100 ? 'FULL' : `${state.bass}%`}
-            </span>
-          </div>
-          <div className="h-2.5 bg-muted/30 rounded-full overflow-hidden border border-border/20">
-            <div
-              className={`h-full rounded-full transition-all duration-500 ${
-                state.bass === 0 ? 'bg-destructive' : 'bg-primary'
-              }`}
-              style={{
-                width: `${state.bass}%`,
-                boxShadow: state.bass > 0 ? '0 0 10px hsl(185 100% 55% / 0.5)' : undefined
-              }}
-            />
-          </div>
-        </div>
-
-        {/* Filter */}
-        <div className="space-y-1.5">
-          <div className="flex justify-between text-xs">
-            <span className="text-muted-foreground font-medium">Filter</span>
-            <span className="text-accent font-bold font-mono">
-              {state.filter === 50 ? 'NEUTRAL' : state.filter > 50 ? 'HI-PASS' : 'LO-PASS'}
-            </span>
-          </div>
-          <div className="h-2.5 bg-muted/30 rounded-full overflow-hidden relative border border-border/20">
-            <div className="absolute inset-y-0 left-1/2 w-0.5 bg-accent/30" />
-            <div
-              className="absolute inset-y-0 bg-accent rounded-full transition-all duration-500"
-              style={{
-                left: state.filter < 50 ? `${state.filter}%` : '50%',
-                width: state.filter < 50 ? `${50 - state.filter}%` : `${state.filter - 50}%`,
-                boxShadow: state.filter !== 50 ? '0 0 8px hsl(32 100% 55% / 0.5)' : undefined
-              }}
-            />
-          </div>
+        <div
+          className="text-[9px] font-bold uppercase tracking-[0.1em] px-1.5 py-0.5 rounded border"
+          style={{
+            color: fader === 0 ? 'rgba(153,255,224,0.35)' : fader >= 99 ? accentColor : '#ffeaa0',
+            borderColor: fader === 0 ? 'rgba(255,255,255,0.08)' : fader >= 99 ? `rgba(${accentRgb},0.40)` : 'rgba(255,234,160,0.30)',
+            background: 'rgba(0,0,0,0.30)',
+          }}
+        >
+          {fader === 0 ? 'STDBY' : fader >= 99 ? 'LIVE' : 'FADING'}
         </div>
       </div>
 
-      {/* Status Badge */}
-      <div className={`relative mt-4 text-center py-2.5 rounded-lg transition-all duration-300 ${
-        state.fader === 100
-          ? (isPrimary ? 'bg-primary/20 border border-primary/40' : 'bg-secondary/20 border border-secondary/40')
-          : state.fader > 0
-            ? 'bg-accent/10 border border-accent/30'
-            : 'bg-muted/20 border border-border/20'
-      }`}>
-        <span className={`text-xs font-black uppercase tracking-wide ${status.class} ${
-          state.fader === 100 ? 'neon-pulse' : ''
-        }`}>
-          {status.icon} {status.text}
-        </span>
+      {/* Volume */}
+      <div className="space-y-1 mb-2">
+        <div className="flex justify-between text-[9px] uppercase tracking-[0.12em]">
+          <span style={{ color: 'rgba(153,255,224,0.50)' }}>VOL</span>
+          <span className="font-bold" style={{ color: '#d8efe9' }}>{Math.round(fader)}%</span>
+        </div>
+        <div className="h-2 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.06)' }}>
+          <div
+            className="h-full rounded-full transition-none"
+            style={{
+              width: `${fader}%`,
+              background: `rgba(${accentRgb}, 0.85)`,
+              boxShadow: fader > 5 ? `0 0 8px rgba(${accentRgb}, 0.40)` : 'none',
+            }}
+          />
+        </div>
+      </div>
+
+      {/* Bass */}
+      <div className="space-y-1 mb-2">
+        <div className="flex justify-between text-[9px] uppercase tracking-[0.12em]">
+          <span style={{ color: 'rgba(153,255,224,0.50)' }}>BASS</span>
+          <span
+            className="font-bold"
+            style={{
+              color: bass < 5 ? '#ff6060' : bass > 95 ? accentColor : '#ffeaa0',
+              textShadow: bassPhase && bass < 5 ? '0 0 8px rgba(255,96,96,0.60)' : undefined,
+            }}
+          >
+            {bass < 5 ? 'CUT' : bass > 95 ? 'FULL' : `${Math.round(bass)}%`}
+          </span>
+        </div>
+        <div className="h-2 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.06)' }}>
+          <div
+            className="h-full rounded-full transition-none"
+            style={{
+              width: `${bass}%`,
+              background: bass < 5 ? 'rgba(255,96,96,0.70)' : `rgba(${accentRgb}, 0.85)`,
+              boxShadow: bass > 5 ? `0 0 8px rgba(${accentRgb}, 0.40)` : undefined,
+            }}
+          />
+        </div>
+      </div>
+
+      {/* Filter */}
+      <div className="space-y-1">
+        <div className="flex justify-between text-[9px] uppercase tracking-[0.12em]">
+          <span style={{ color: 'rgba(153,255,224,0.50)' }}>FILTER</span>
+          <span className="font-bold" style={{ color: filter === 50 ? 'rgba(153,255,224,0.45)' : '#ffeaa0' }}>
+            {filterLabel}
+          </span>
+        </div>
+        <div className="relative h-2 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.06)' }}>
+          {/* Center line */}
+          <div className="absolute inset-y-0 left-1/2 w-px" style={{ background: 'rgba(255,255,255,0.15)' }} />
+          {/* Fill from center */}
+          <div
+            className="absolute inset-y-0 rounded-full transition-none"
+            style={{
+              left: filter < 50 ? `${filter}%` : '50%',
+              width: `${Math.abs(filter - 50)}%`,
+              background: 'rgba(255,234,160,0.70)',
+              boxShadow: filter !== 50 ? '0 0 6px rgba(255,234,160,0.30)' : 'none',
+            }}
+          />
+        </div>
       </div>
     </div>
   );

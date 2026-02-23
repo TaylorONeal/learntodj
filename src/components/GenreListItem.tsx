@@ -10,14 +10,23 @@ interface GenreListItemProps {
 
 export function GenreListItem({ genre, isFavorite, onToggleFavorite }: GenreListItemProps) {
   return (
-    <div
-      className="group flex items-center gap-3 py-2.5 px-3 rounded border transition-all duration-200 relative overflow-hidden"
+    <Link
+      to={`/genre/${genre.id}`}
+      className="group flex items-center gap-3 py-2.5 px-3 rounded border transition-all duration-200 relative overflow-hidden hover:brightness-110"
       style={{
         borderColor: isFavorite ? 'rgba(255,214,10,0.30)' : 'rgba(255,255,255,0.08)',
         background: isFavorite ? 'rgba(255,214,10,0.04)' : 'rgba(0,0,0,0.25)',
+        textDecoration: 'none',
       }}
     >
-      <div className="text-xl flex-shrink-0 transition-transform duration-200 group-hover:scale-110">
+      <div
+        className="flex-shrink-0 w-10 h-7 flex items-center justify-center rounded border text-[9px] font-mono font-bold tracking-[0.12em] transition-all duration-200 group-hover:brightness-125"
+        style={{
+          borderColor: isFavorite ? 'rgba(255,214,10,0.40)' : 'rgba(127,255,212,0.30)',
+          background: isFavorite ? 'rgba(255,214,10,0.08)' : 'rgba(127,255,212,0.06)',
+          color: isFavorite ? '#ffd60a' : '#7effdb',
+        }}
+      >
         {genre.icon}
       </div>
 
@@ -46,18 +55,10 @@ export function GenreListItem({ genre, isFavorite, onToggleFavorite }: GenreList
         <Star className={`w-3.5 h-3.5 ${isFavorite ? 'fill-current' : ''}`} />
       </button>
 
-      <Link
-        to={`/genre/${genre.id}`}
-        className="flex items-center gap-1 px-3 py-1.5 text-[10px] font-mono uppercase tracking-[0.15em] border rounded flex-shrink-0 transition-all duration-200 hover:scale-[1.02]"
-        style={{
-          borderColor: 'rgba(127,255,212,0.30)',
-          color: '#7effdb',
-          background: 'rgba(127,255,212,0.06)',
-        }}
-      >
-        Practice
-        <ChevronRight className="w-3 h-3" />
-      </Link>
-    </div>
+      <ChevronRight
+        className="w-4 h-4 flex-shrink-0 opacity-40 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all duration-200"
+        style={{ color: '#7effdb' }}
+      />
+    </Link>
   );
 }

@@ -29,7 +29,7 @@ export const genres: Genre[] = [
   {
     id: "house",
     name: "House",
-    icon: "🏠",
+    icon: "HSE",
     bpmRange: { min: 120, max: 130 },
     keyTips: {
       basic: [
@@ -126,7 +126,7 @@ export const genres: Genre[] = [
   {
     id: "tech-house",
     name: "Tech House",
-    icon: "⚙️",
+    icon: "TCH",
     bpmRange: { min: 124, max: 130 },
     keyTips: {
       basic: [
@@ -215,7 +215,7 @@ export const genres: Genre[] = [
   {
     id: "progressive",
     name: "Progressive House",
-    icon: "📈",
+    icon: "PRG",
     bpmRange: { min: 126, max: 132 },
     keyTips: {
       basic: [
@@ -306,7 +306,7 @@ export const genres: Genre[] = [
   {
     id: "trance",
     name: "Trance",
-    icon: "🌀",
+    icon: "TRN",
     bpmRange: { min: 136, max: 145 },
     keyTips: {
       basic: [
@@ -398,7 +398,7 @@ export const genres: Genre[] = [
   {
     id: "dubstep",
     name: "Dubstep",
-    icon: "🔊",
+    icon: "DBS",
     bpmRange: { min: 140, max: 150 },
     keyTips: {
       basic: [
@@ -489,7 +489,7 @@ export const genres: Genre[] = [
   {
     id: "trap",
     name: "Trap",
-    icon: "🎺",
+    icon: "TRP",
     bpmRange: { min: 140, max: 160 },
     keyTips: {
       basic: [
@@ -580,7 +580,7 @@ export const genres: Genre[] = [
   {
     id: "dnb",
     name: "Drum & Bass",
-    icon: "🥁",
+    icon: "DNB",
     bpmRange: { min: 170, max: 180 },
     keyTips: {
       basic: [
@@ -669,7 +669,7 @@ export const genres: Genre[] = [
   {
     id: "hardstyle",
     name: "Hardstyle",
-    icon: "⚡",
+    icon: "HRD",
     bpmRange: { min: 150, max: 160 },
     keyTips: {
       basic: [
@@ -761,7 +761,7 @@ export const genres: Genre[] = [
   {
     id: "hybrid",
     name: "Hybrid EDM",
-    icon: "🎛️",
+    icon: "HBR",
     bpmRange: { min: 128, max: 150 },
     keyTips: {
       basic: [
@@ -851,7 +851,7 @@ export const genres: Genre[] = [
   {
     id: "melodic-bass",
     name: "Melodic Bass",
-    icon: "🌊",
+    icon: "MLB",
     bpmRange: { min: 140, max: 160 },
     keyTips: {
       basic: [
@@ -942,7 +942,7 @@ export const genres: Genre[] = [
   {
     id: "ecstatic-dance",
     name: "Ecstatic Dance",
-    icon: "🕉️",
+    icon: "ECD",
     bpmRange: { min: 90, max: 130 },
     keyTips: {
       basic: [
