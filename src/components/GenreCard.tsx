@@ -1,6 +1,8 @@
 import { Star, ChevronRight } from 'lucide-react';
 import { Scanlines } from '@/components/Scanlines';
+import { GenreIcon } from '@/components/GenreIcon';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import type { Genre } from '@/data/genres';
 
 interface GenreCardProps {
@@ -11,8 +13,12 @@ interface GenreCardProps {
 
 export function GenreCard({ genre, isFavorite, onToggleFavorite }: GenreCardProps) {
   return (
-    <div
-      className="genre-card relative rounded-lg overflow-hidden border animate-slide-up"
+    <motion.div
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+      whileHover={{ y: -2, transition: { duration: 0.2 } }}
+      className="genre-card relative rounded-lg overflow-hidden border"
       style={{
         borderColor: 'rgba(127, 255, 212, 0.30)',
         background: 'radial-gradient(circle at top, rgba(0,255,184,0.10), transparent 60%), #061116',
@@ -23,7 +29,16 @@ export function GenreCard({ genre, isFavorite, onToggleFavorite }: GenreCardProp
       <div className="relative p-5">
         <div className="flex items-start justify-between mb-3">
           <div className="flex items-center gap-3">
-            <span className="text-3xl">{genre.icon}</span>
+            <div
+              className="w-10 h-10 rounded flex items-center justify-center border"
+              style={{
+                borderColor: 'rgba(127,255,212,0.25)',
+                background: 'rgba(127,255,212,0.08)',
+                color: '#7effdb',
+              }}
+            >
+              <GenreIcon icon={genre.icon} className="w-5 h-5" />
+            </div>
             <div>
               <h3 className="font-bold font-mono uppercase tracking-[0.08em]" style={{ color: '#d8efe9' }}>
                 {genre.name}
@@ -34,13 +49,14 @@ export function GenreCard({ genre, isFavorite, onToggleFavorite }: GenreCardProp
             </div>
           </div>
 
-          <button
+          <motion.button
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
               onToggleFavorite();
             }}
-            className="p-2 rounded border transition-all duration-300"
+            whileTap={{ scale: 0.85 }}
+            className="p-2 rounded border transition-colors duration-300"
             style={{
               borderColor: isFavorite ? 'rgba(255,214,10,0.40)' : 'rgba(255,255,255,0.10)',
               background: isFavorite ? 'rgba(255,214,10,0.10)' : 'rgba(0,0,0,0.30)',
@@ -48,7 +64,7 @@ export function GenreCard({ genre, isFavorite, onToggleFavorite }: GenreCardProp
             }}
           >
             <Star className={`w-4 h-4 ${isFavorite ? 'fill-current' : ''}`} />
-          </button>
+          </motion.button>
         </div>
 
         <Link
@@ -65,6 +81,6 @@ export function GenreCard({ genre, isFavorite, onToggleFavorite }: GenreCardProp
           <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" style={{ color: '#7effdb' }} />
         </Link>
       </div>
-    </div>
+    </motion.div>
   );
 }
