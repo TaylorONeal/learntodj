@@ -3,6 +3,7 @@ import { Scanlines } from '@/components/Scanlines';
 import { genres } from '@/data/genres';
 import { TrackFlowTimeline, TrackSection } from '@/components/TrackFlowTimeline';
 import { Header } from '@/components/Header';
+import { GenreIcon } from '@/components/GenreIcon';
 
 const sectionTypeDescriptions: Record<TrackSection['type'], string> = {
   intro: 'Opening bars with minimal elements, designed for mixing in.',
