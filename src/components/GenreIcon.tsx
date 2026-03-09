@@ -1,5 +1,5 @@
 import {
-  Home, Settings, TrendingUp, Orbit, Speaker, Music,
+  Settings, Orbit, Speaker, Music,
   Drum, Zap, SlidersHorizontal, Waves, Flower2,
   type LucideIcon
 } from 'lucide-react';
