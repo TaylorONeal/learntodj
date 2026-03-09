@@ -1,4 +1,5 @@
 import { useParams, Navigate } from 'react-router-dom';
+import { GenreIcon } from '@/components/GenreIcon';
 import { motion } from 'framer-motion';
 import {
   Key,
