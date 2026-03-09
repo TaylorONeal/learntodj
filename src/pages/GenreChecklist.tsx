@@ -83,7 +83,7 @@ const GenreChecklist = () => {
           <div className="relative p-5">
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-4">
-                <div className="text-4xl filter drop-shadow-lg">{genre.icon}</div>
+                <GenreIcon icon={genre.icon} className="w-10 h-10" style={{ color: '#7effdb' }} />
                 <div>
                   <p className="text-[10px] font-mono uppercase tracking-[0.25em] mb-1" style={{ color: '#99ffe0' }}>
                     Genre // Practice Guide
