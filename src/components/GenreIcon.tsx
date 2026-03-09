@@ -5,9 +5,9 @@ import {
 } from 'lucide-react';
 
 const iconMap: Record<string, LucideIcon> = {
-  '🏠': Home,
+  '🏠': Speaker,
   '⚙️': Settings,
-  '📈': TrendingUp,
+  '📈': Waves,
   '🌀': Orbit,
   '🔊': Speaker,
   '🎺': Music,
