@@ -3,6 +3,7 @@ import { Scanlines } from '@/components/Scanlines';
 import { genres } from '@/data/genres';
 import { TrackFlowTimeline, TrackSection } from '@/components/TrackFlowTimeline';
 import { Header } from '@/components/Header';
+import { GenreIcon } from '@/components/GenreIcon';
 
 const sectionTypeDescriptions: Record<TrackSection['type'], string> = {
   intro: 'Opening bars with minimal elements, designed for mixing in.',
@@ -70,7 +71,7 @@ const TrackFlowsPage = () => {
               <Scanlines />
               <div className="relative">
                 <div className="flex items-center gap-2 mb-3">
-                  <span className="text-lg">{genre.icon}</span>
+                  <GenreIcon icon={genre.icon} className="w-5 h-5" style={{ color: '#7effdb' }} />
                   <h3
                     className="text-[11px] font-mono uppercase tracking-[0.15em] transition-colors"
                     style={{ color: '#d8efe9' }}
