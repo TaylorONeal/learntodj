@@ -78,10 +78,10 @@ const Index = () => {
           <Scanlines />
           <div className="px-4 py-3 text-center relative">
             <p className="text-[10px] font-mono uppercase tracking-[0.25em] mb-1.5" style={{ color: '#ffd60a' }}>
-              Core Principle
+              Introduction
             </p>
             <p className="text-sm font-mono" style={{ color: '#d8efe9' }}>
-              "Prep removes risk. Playing is just timing and restraint."
+              Learn to DJ: Break it down
             </p>
           </div>
         </motion.div>
