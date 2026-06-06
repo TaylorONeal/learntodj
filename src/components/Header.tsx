@@ -14,7 +14,8 @@ export function Header({ title = "DJ Flow Guide", showBack = false }: HeaderProp
   const action = showBack && !isHome ? (
     <Link
       to="/"
-      className="text-[10px] text-[#ffd60a]/80 font-mono uppercase tracking-widest hover:text-[#ffd60a] transition-colors"
+      aria-label="Back to home"
+      className="flex items-center gap-1 px-3 py-2 -my-1 rounded text-[10px] text-[#ffd60a]/80 font-mono uppercase tracking-widest border border-[#ffd60a]/20 hover:text-[#ffd60a] hover:border-[#ffd60a]/40 active:scale-95 transition-all"
     >
       ← Back
     </Link>
