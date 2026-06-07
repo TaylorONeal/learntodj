@@ -116,11 +116,12 @@ export function DeckVisual() {
       {/* Phase stepper */}
       <div className="relative pt-1">
         {/* Track */}
-        <div className="absolute top-[15px] left-3 right-3 h-0.5 rounded-full" style={{ background: 'rgba(255,255,255,0.10)' }} />
+        {/* Track spans the first→last dot centers (dots are flex-1, so centers sit at 1/12 and 11/12) */}
+        <div className="absolute top-[15px] h-0.5 rounded-full" style={{ left: '8.333%', right: '8.333%', background: 'rgba(255,255,255,0.10)' }} />
         <motion.div
-          className="absolute top-[15px] left-3 h-0.5 rounded-full"
-          style={{ background: `linear-gradient(90deg, ${TEAL}, ${GOLD})`, boxShadow: `0 0 8px ${TEAL}66` }}
-          animate={{ width: `calc((100% - 1.5rem) * ${phaseIndex / (phases.length - 1)})` }}
+          className="absolute top-[15px] h-0.5 rounded-full"
+          style={{ left: '8.333%', background: `linear-gradient(90deg, ${TEAL}, ${GOLD})`, boxShadow: `0 0 8px ${TEAL}66` }}
+          animate={{ width: `${(phaseIndex / (phases.length - 1)) * 83.333}%` }}
           transition={{ duration: 0.4, ease: 'easeOut' }}
         />
 
