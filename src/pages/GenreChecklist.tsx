@@ -190,7 +190,7 @@ const GenreChecklist = () => {
         {/* Track Flow Timeline */}
         {genre.trackFlow && (
           <InfoCard title="Typical Track Flow" icon={<Clock className="w-4 h-4" />} variant="secondary">
-            <TrackFlowTimeline sections={genre.trackFlow} />
+            <TrackFlowTimeline sections={genre.trackFlow} bpm={Math.round((genre.bpmRange.min + genre.bpmRange.max) / 2)} />
           </InfoCard>
         )}
 

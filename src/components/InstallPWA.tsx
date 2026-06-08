@@ -16,8 +16,8 @@ export const InstallPWA = () => {
 
   useEffect(() => {
     // Check if already installed (standalone mode)
-    const standalone = window.matchMedia('(display-mode: standalone)').matches 
-      || (window.navigator as any).standalone === true;
+    const standalone = window.matchMedia('(display-mode: standalone)').matches
+      || (window.navigator as Navigator & { standalone?: boolean }).standalone === true;
     setIsStandalone(standalone);
 
     // Check if iOS
