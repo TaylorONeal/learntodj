@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 const FAVORITES_KEY = 'dj-flow-guide-favorites';
 
@@ -16,15 +16,15 @@ export function useFavorites() {
     localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
   }, [favorites]);
 
-  const toggleFavorite = (genreId: string) => {
+  const toggleFavorite = useCallback((genreId: string) => {
     setFavorites(prev =>
       prev.includes(genreId)
         ? prev.filter(id => id !== genreId)
         : [...prev, genreId]
     );
-  };
+  }, []);
 
-  const isFavorite = (genreId: string) => favorites.includes(genreId);
+  const isFavorite = useCallback((genreId: string) => favorites.includes(genreId), [favorites]);
 
   return { favorites, toggleFavorite, isFavorite };
 }
