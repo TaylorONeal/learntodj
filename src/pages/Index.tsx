@@ -11,7 +11,6 @@ import { Scanlines } from '@/components/Scanlines';
 import { genres } from '@/data/genres';
 import { useFavorites } from '@/hooks/useFavorites';
 import { useAdvancedMode } from '@/hooks/useAdvancedMode';
-import { ScrollArea } from '@/components/ui/scroll-area';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 12 },
@@ -50,7 +49,7 @@ const Index = () => {
       if (!aFav && bFav) return 1;
       return 0;
     });
-  }, [searchQuery, showFavoritesOnly, favorites, isFavorite]);
+  }, [searchQuery, showFavoritesOnly, isFavorite]);
 
   const exploreItems = [
     { to: '/intro/flows', icon: BarChart3, label: 'Track Flows', sub: 'Intro → Drop patterns', color: '#ffd60a', borderColor: 'rgba(255,214,10,0.25)' },
@@ -253,34 +252,32 @@ const Index = () => {
             placeholder="Search genres..."
           />
 
-          {/* Genre List */}
+          {/* Genre List — flows with the page so mobile uses a single natural scroll */}
           <div
-            className="relative rounded-lg overflow-hidden border"
+            className="relative rounded-lg overflow-hidden border p-3"
             style={{ borderColor: 'rgba(255,255,255,0.08)', background: 'rgba(0,0,0,0.20)' }}
           >
-            <ScrollArea className="h-[340px] p-3">
-              <div className="space-y-1.5">
-                {filteredGenres.map((genre, i) => (
-                  <GenreListItem
-                    key={genre.id}
-                    genre={genre}
-                    isFavorite={isFavorite(genre.id)}
-                    onToggleFavorite={() => toggleFavorite(genre.id)}
-                    index={i}
-                  />
-                ))}
+            <div className="space-y-1.5">
+              {filteredGenres.map((genre, i) => (
+                <GenreListItem
+                  key={genre.id}
+                  genre={genre}
+                  isFavorite={isFavorite(genre.id)}
+                  onToggleFavorite={() => toggleFavorite(genre.id)}
+                  index={i}
+                />
+              ))}
 
-                {filteredGenres.length === 0 && (
-                  <div className="text-center py-12">
-                    <p className="text-xs font-mono uppercase tracking-[0.2em]" style={{ color: '#99ffe0' }}>
-                      {showFavoritesOnly
-                        ? "No favorites yet — star some genres"
-                        : "No genres match your search"}
-                    </p>
-                  </div>
-                )}
-              </div>
-            </ScrollArea>
+              {filteredGenres.length === 0 && (
+                <div className="text-center py-12">
+                  <p className="text-xs font-mono uppercase tracking-[0.2em]" style={{ color: '#99ffe0' }}>
+                    {showFavoritesOnly
+                      ? "No favorites yet — star some genres"
+                      : "No genres match your search"}
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
 
           <div className="text-center">

@@ -82,7 +82,7 @@ const TrackFlowsPage = () => {
                     {genre.bpmRange.min}–{genre.bpmRange.max} BPM
                   </span>
                 </div>
-                <TrackFlowTimeline sections={genre.trackFlow!} />
+                <TrackFlowTimeline sections={genre.trackFlow!} bpm={Math.round((genre.bpmRange.min + genre.bpmRange.max) / 2)} />
               </div>
             </Link>
           ))}
