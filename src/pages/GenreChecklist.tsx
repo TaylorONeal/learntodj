@@ -81,7 +81,7 @@ const GenreChecklist = () => {
             }}
           />
           <div className="relative p-5">
-            <div className="flex items-start justify-between">
+            <div className="flex flex-wrap gap-4 items-start justify-between">
               <div className="flex items-center gap-4">
                 <GenreIcon icon={genre.icon} className="w-10 h-10" style={{ color: '#7effdb' }} />
                 <div>
@@ -100,6 +100,8 @@ const GenreChecklist = () => {
               </div>
               <div className="flex items-center gap-2">
                 <button
+                  aria-label={`${isFavorite(genre.id) ? "Unfavorite" : "Favorite"} ${genre.name}`}
+                  aria-pressed={isFavorite(genre.id)}
                   onClick={() => toggleFavorite(genre.id)}
                   className="p-2 rounded border transition-all duration-300"
                   style={{
@@ -125,7 +127,7 @@ const GenreChecklist = () => {
             boxShadow: hasActiveSession ? '0 0 40px rgba(0,255,184,0.06)' : 'none',
           }}
         >
-          <div className="flex items-center justify-between">
+          <div className="flex flex-wrap gap-4 items-center justify-between">
             <div className="flex items-center gap-3">
               {hasActiveSession ? (
                 <>
@@ -137,7 +139,7 @@ const GenreChecklist = () => {
                   </div>
                   <div>
                     <p className="text-[11px] font-mono uppercase tracking-[0.2em]" style={{ color: '#7effdb' }}>
-                      Session Active
+                      {checkedItems === totalItems ? "Session complete — nice work!" : "Session Active"}
                     </p>
                     <p className="text-[10px] font-mono mt-0.5" style={{ color: '#99ffe0' }}>
                       {checkedItems} of {totalItems} steps checked
@@ -307,8 +309,8 @@ const GenreChecklist = () => {
         >
           {/* Pulsing header */}
           <motion.div
-            animate={{ opacity: [0.3, 1, 0.3] }}
-            transition={{ duration: 0.55, repeat: Infinity }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.2 }}
             className="px-4 py-2 text-center border-b font-mono text-[11px] uppercase tracking-[0.28em]"
             style={{
               background: '#2a0000',
@@ -341,12 +343,6 @@ const GenreChecklist = () => {
             </ul>
           </div>
 
-          {/* Pulsing border flash overlay */}
-          <motion.div
-            animate={{ opacity: [0, 0.6, 0] }}
-            transition={{ duration: 0.55, repeat: Infinity }}
-            className="absolute inset-0 border-4 border-red-500 pointer-events-none rounded-lg"
-          />
         </motion.section>
       </main>
     </div>

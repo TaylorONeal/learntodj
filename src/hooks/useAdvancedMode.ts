@@ -1,19 +1,16 @@
 import { useState, useEffect } from 'react';
+import { readStorage, writeStorage } from '@/lib/storage';
 
 const MODE_KEY = 'dj-flow-guide-advanced-mode';
 
 export function useAdvancedMode() {
   const [isAdvanced, setIsAdvanced] = useState<boolean>(() => {
-    try {
-      const stored = localStorage.getItem(MODE_KEY);
-      return stored ? JSON.parse(stored) : false;
-    } catch {
-      return false;
-    }
+    const stored = readStorage(MODE_KEY);
+    return typeof stored === 'boolean' ? stored : false;
   });
 
   useEffect(() => {
-    localStorage.setItem(MODE_KEY, JSON.stringify(isAdvanced));
+    writeStorage(MODE_KEY, isAdvanced);
   }, [isAdvanced]);
 
   const toggleMode = () => setIsAdvanced(prev => !prev);

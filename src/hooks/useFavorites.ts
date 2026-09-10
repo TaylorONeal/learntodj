@@ -1,19 +1,16 @@
 import { useState, useEffect } from 'react';
+import { readStorage, writeStorage } from '@/lib/storage';
 
 const FAVORITES_KEY = 'dj-flow-guide-favorites';
 
 export function useFavorites() {
   const [favorites, setFavorites] = useState<string[]>(() => {
-    try {
-      const stored = localStorage.getItem(FAVORITES_KEY);
-      return stored ? JSON.parse(stored) : [];
-    } catch {
-      return [];
-    }
+    const stored = readStorage(FAVORITES_KEY);
+    return Array.isArray(stored) && stored.every(id => typeof id === 'string') ? stored : [];
   });
 
   useEffect(() => {
-    localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
+    writeStorage(FAVORITES_KEY, favorites);
   }, [favorites]);
 
   const toggleFavorite = (genreId: string) => {
