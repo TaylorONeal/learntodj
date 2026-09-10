@@ -11,7 +11,8 @@ export function SearchBar({ value, onChange, placeholder = "Search genres..." }:
     <div className="relative">
       <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: '#99ffe0' }} />
       <input
-        type="text"
+        type="search"
+        aria-label="Search genres"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
@@ -32,6 +33,7 @@ export function SearchBar({ value, onChange, placeholder = "Search genres..." }:
       />
       {value && (
         <button
+          aria-label="Clear search"
           onClick={() => onChange('')}
           className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 flex items-center justify-center rounded transition-colors"
           style={{ color: '#99ffe0' }}

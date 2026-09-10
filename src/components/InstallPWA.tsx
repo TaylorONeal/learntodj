@@ -1,3 +1,5 @@
+import { Capacitor } from '@capacitor/core';
+import { readStorage, writeStorage } from '@/lib/storage';
 import { useState, useEffect } from 'react';
 import { Download, X, Smartphone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -16,7 +18,7 @@ export const InstallPWA = () => {
 
   useEffect(() => {
     // Check if already installed (standalone mode)
-    const standalone = window.matchMedia('(display-mode: standalone)').matches
+    const standalone = window.matchMedia('(display-mode: standalone)').matches 
       || (window.navigator as Navigator & { standalone?: boolean }).standalone === true;
     setIsStandalone(standalone);
 
@@ -25,9 +27,9 @@ export const InstallPWA = () => {
     setIsIOS(iOS);
 
     // Check if user dismissed recently
-    const dismissedTime = localStorage.getItem('pwa-install-dismissed');
-    if (dismissedTime) {
-      const hoursSinceDismissed = (Date.now() - parseInt(dismissedTime)) / (1000 * 60 * 60);
+    const dismissedTime = readStorage('pwa-install-dismissed');
+    if (typeof dismissedTime === 'number') {
+      const hoursSinceDismissed = (Date.now() - dismissedTime) / (1000 * 60 * 60);
       if (hoursSinceDismissed < 24) {
         setDismissed(true);
       }
@@ -59,29 +61,32 @@ export const InstallPWA = () => {
   const handleInstallClick = async () => {
     if (!deferredPrompt) return;
 
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-
-    if (outcome === 'accepted') {
+    try {
+      await deferredPrompt.prompt();
+      await deferredPrompt.userChoice;
+    } catch {
+      // Dismissal or an unavailable browser prompt must not break the app.
+    } finally {
+      // A browser install prompt can be consumed only once.
       setShowInstallBanner(false);
+      setDeferredPrompt(null);
     }
-    setDeferredPrompt(null);
   };
 
   const handleDismiss = () => {
     setShowInstallBanner(false);
     setDismissed(true);
-    localStorage.setItem('pwa-install-dismissed', Date.now().toString());
+    writeStorage('pwa-install-dismissed', Date.now());
   };
 
   // Don't show if already installed or dismissed
-  if (isStandalone || dismissed || !showInstallBanner) {
+  if (Capacitor.isNativePlatform() || isStandalone || dismissed || !showInstallBanner) {
     return null;
   }
 
   return (
-    <div className="fixed bottom-4 left-4 right-4 z-50 animate-in slide-in-from-bottom-4 duration-300">
-      <div className="glass-card rounded-xl p-4 border border-primary/30 bg-background/95 backdrop-blur-lg shadow-lg max-w-md mx-auto">
+    <div className="relative mx-4 my-6">
+      <div className="relative glass-card rounded-xl p-4 border border-primary/30 bg-background/95 backdrop-blur-lg shadow-lg max-w-md mx-auto">
         <button
           onClick={handleDismiss}
           className="absolute top-2 right-2 p-1 rounded-full hover:bg-muted/50 transition-colors"

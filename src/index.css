@@ -437,3 +437,21 @@
   0%, 100% { opacity: 1; }
   50% { opacity: 0.6; }
 }
+
+/* Comfortable touch controls, keyboard navigation, and device cutouts. */
+body { padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); padding-bottom: env(safe-area-inset-bottom); }
+header { padding-top: env(safe-area-inset-top); }
+button, [role="button"], input, .btn-neon { min-height: 44px; }
+button { touch-action: manipulation; }
+button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid #ffd60a; outline-offset: 4px; }
+.practice-panel { padding: clamp(1.25rem, 4vw, 2.5rem); border: 1px solid rgba(126,255,219,.28); border-radius: 20px; background: radial-gradient(ellipse at top right, rgba(0,245,212,.12), transparent 65%), #061116; }
+.practice-hero { box-shadow: 0 16px 60px rgba(0,0,0,.25); }
+.answer-option { display: flex; align-items: center; gap: 1rem; width: 100%; padding: 1rem; border: 1px solid rgba(255,255,255,.2); border-radius: 12px; text-align: left; line-height: 1.5; background: rgba(0,0,0,.2); }
+.answer-option:not(:disabled):hover { border-color: #7effdb; background: rgba(126,255,219,.08); }
+.answer-letter { flex-shrink: 0; color: #99ffe0; font-size: .8rem; }
+.answer-correct { border-color: #7effdb; background: rgba(126,255,219,.12); }
+.answer-incorrect { border-color: #ff8080; background: rgba(255,128,128,.08); }
+@media (max-width: 480px) { input { font-size: 16px !important; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
