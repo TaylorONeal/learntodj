@@ -248,33 +248,31 @@ const Index = () => {
             placeholder="Search genres..."
           />
 
-          {/* Genre List */}
+          {/* Genre List — flows with the page so mobile uses a single natural scroll */}
           <div
-            className="relative rounded-lg overflow-hidden border"
+            className="relative rounded-lg overflow-hidden border p-3"
             style={{ borderColor: 'rgba(255,255,255,0.08)', background: 'rgba(0,0,0,0.20)' }}
           >
-            <div className="p-3">
-              <div className="space-y-1.5">
-                {filteredGenres.map((genre, i) => (
-                  <GenreListItem
-                    key={genre.id}
-                    genre={genre}
-                    isFavorite={isFavorite(genre.id)}
-                    onToggleFavorite={() => toggleFavorite(genre.id)}
-                    index={i}
-                  />
-                ))}
+            <div className="space-y-1.5">
+              {filteredGenres.map((genre, i) => (
+                <GenreListItem
+                  key={genre.id}
+                  genre={genre}
+                  isFavorite={isFavorite(genre.id)}
+                  onToggleFavorite={() => toggleFavorite(genre.id)}
+                  index={i}
+                />
+              ))}
 
-                {filteredGenres.length === 0 && (
-                  <div className="text-center py-12">
-                    <p className="text-xs font-mono uppercase tracking-[0.2em]" style={{ color: '#99ffe0' }}>
-                      {showFavoritesOnly
-                        ? "No favorites yet — star some genres"
-                        : "No genres match your search"}
-                    </p>
-                  </div>
-                )}
-              </div>
+              {filteredGenres.length === 0 && (
+                <div className="text-center py-12">
+                  <p className="text-xs font-mono uppercase tracking-[0.2em]" style={{ color: '#99ffe0' }}>
+                    {showFavoritesOnly
+                      ? "No favorites yet — star some genres"
+                      : "No genres match your search"}
+                  </p>
+                </div>
+              )}
             </div>
           </div>
 
