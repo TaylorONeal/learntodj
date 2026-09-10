@@ -1,14 +1,7 @@
-import { useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Scanlines } from '@/components/Scanlines';
-import { useEffect } from "react";
 
 const NotFound = () => {
-  const location = useLocation();
-
-  useEffect(() => {
-    console.error("404 Error: User attempted to access non-existent route:", location.pathname);
-  }, [location.pathname]);
-
   return (
     <div
       className="flex min-h-screen items-center justify-center relative"
@@ -24,8 +17,8 @@ const NotFound = () => {
           Page not found
         </p>
         <div className="pt-2">
-          <a
-            href="/"
+          <Link
+            to="/"
             className="inline-block px-4 py-2 text-[11px] font-mono uppercase tracking-[0.2em] border rounded transition-all duration-200 hover:scale-[1.02]"
             style={{
               borderColor: 'rgba(127,255,212,0.40)',
@@ -34,7 +27,7 @@ const NotFound = () => {
             }}
           >
             ← Return to Home
-          </a>
+          </Link>
         </div>
       </div>
     </div>

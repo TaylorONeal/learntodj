@@ -7,6 +7,8 @@ export function ModeToggle({ isAdvanced, onToggle }: ModeToggleProps) {
   return (
     <button
       onClick={onToggle}
+      aria-label="Advanced tips"
+      aria-pressed={isAdvanced}
       className="px-3 py-1.5 text-[11px] font-mono uppercase tracking-[0.2em] border rounded transition-all duration-200"
       style={{
         borderColor: isAdvanced ? 'rgba(255,214,10,0.50)' : 'rgba(127,255,212,0.30)',

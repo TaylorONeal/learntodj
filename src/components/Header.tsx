@@ -1,5 +1,4 @@
 import { Link, useLocation } from 'react-router-dom';
-import { TerminalChrome } from './TerminalChrome';
 
 interface HeaderProps {
   title?: string;
@@ -14,9 +13,9 @@ export function Header({ title = "DJ Flow Guide", showBack = false }: HeaderProp
   const action = showBack && !isHome ? (
     <Link
       to="/"
-      className="text-[10px] text-[#ffd60a]/80 font-mono uppercase tracking-widest hover:text-[#ffd60a] transition-colors"
+      className="inline-flex items-center min-h-11 text-xs text-[#ffd60a]/80 font-mono uppercase tracking-widest hover:text-[#ffd60a] transition-colors"
     >
-      ← Back
+      ← Home
     </Link>
   ) : undefined;
 

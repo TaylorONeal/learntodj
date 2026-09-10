@@ -14,6 +14,7 @@ export default defineConfig(({ mode }) => ({
     react(),
     mode === "development" && componentTagger(),
     VitePWA({
+      disable: mode === "native",
       registerType: "autoUpdate",
       includeAssets: ["favicon.ico", "robots.txt"],
       manifest: {
@@ -50,6 +51,11 @@ export default defineConfig(({ mode }) => ({
       },
     }),
   ].filter(Boolean),
+  build: {
+    rollupOptions: {
+      output: { manualChunks: { vendor: ["react", "react-dom", "react-router-dom", "framer-motion"] } },
+    },
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

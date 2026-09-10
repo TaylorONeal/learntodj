@@ -47,13 +47,15 @@ export function GenreListItem({ genre, isFavorite, onToggleFavorite, index = 0 }
       </div>
 
       <motion.button
+        aria-label={`${isFavorite ? "Unfavorite" : "Favorite"} ${genre.name}`}
+        aria-pressed={isFavorite}
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
           onToggleFavorite();
         }}
         whileTap={{ scale: 0.85 }}
-        className="p-1.5 rounded flex-shrink-0 border transition-colors duration-200"
+        className="min-w-11 p-1.5 rounded flex-shrink-0 border transition-colors duration-200"
         style={{
           borderColor: isFavorite ? 'rgba(255,214,10,0.40)' : 'transparent',
           background: isFavorite ? 'rgba(255,214,10,0.10)' : 'transparent',
@@ -65,7 +67,8 @@ export function GenreListItem({ genre, isFavorite, onToggleFavorite, index = 0 }
 
       <Link
         to={`/genre/${genre.id}`}
-        className="flex items-center gap-1 px-3 py-1.5 text-[10px] font-mono uppercase tracking-[0.15em] border rounded flex-shrink-0 transition-all duration-200 hover:scale-[1.02]"
+        aria-label={`Open ${genre.name} practice guide`}
+        className="min-h-11 flex items-center gap-1 px-3 py-1.5 text-[10px] font-mono uppercase tracking-[0.15em] border rounded flex-shrink-0 transition-all duration-200 hover:scale-[1.02]"
         style={{
           borderColor: 'rgba(127,255,212,0.30)',
           color: '#7effdb',
