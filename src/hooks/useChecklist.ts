@@ -1,25 +1,22 @@
 import { useState, useEffect } from 'react';
+import { readStorage, writeStorage, isChecklistState, checklistProgress } from '@/lib/storage';
 
 const CHECKLIST_KEY = 'dj-flow-guide-checklists';
 
 interface ChecklistState {
   [genreId: string]: {
-    [section: string]: boolean[];
+    [section: string]: (boolean | null)[];
   };
 }
 
 export function useChecklist(genreId: string) {
   const [checklistState, setChecklistState] = useState<ChecklistState>(() => {
-    try {
-      const stored = localStorage.getItem(CHECKLIST_KEY);
-      return stored ? JSON.parse(stored) : {};
-    } catch {
-      return {};
-    }
+    const stored = readStorage(CHECKLIST_KEY);
+    return isChecklistState(stored) ? stored : {};
   });
 
   useEffect(() => {
-    localStorage.setItem(CHECKLIST_KEY, JSON.stringify(checklistState));
+    writeStorage(CHECKLIST_KEY, checklistState);
   }, [checklistState]);
 
   const toggleItem = (section: string, index: number) => {
@@ -45,8 +42,7 @@ export function useChecklist(genreId: string) {
 
   const getProgress = (section: string, totalItems: number): number => {
     const sectionState = checklistState[genreId]?.[section] || [];
-    const completed = sectionState.filter(Boolean).length;
-    return Math.round((completed / totalItems) * 100);
+    return checklistProgress(sectionState, totalItems);
   };
 
   const resetSection = (section: string) => {

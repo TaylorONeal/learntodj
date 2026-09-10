@@ -11,6 +11,8 @@ import { Scanlines } from '@/components/Scanlines';
 import { genres } from '@/data/genres';
 import { useFavorites } from '@/hooks/useFavorites';
 import { useAdvancedMode } from '@/hooks/useAdvancedMode';
+import { usePractice } from '@/hooks/usePractice';
+import { questions } from '@/data/practice';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 12 },
@@ -22,20 +24,21 @@ const fadeUp = {
 };
 
 const Index = () => {
+  const { state: practice } = usePractice();
   const [searchQuery, setSearchQuery] = useState('');
   const { favorites, toggleFavorite, isFavorite } = useFavorites();
   const { isAdvanced, toggleMode } = useAdvancedMode();
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
 
   const filteredGenres = useMemo(() => {
-    let result = genres;
+    let result = [...genres];
 
     if (showFavoritesOnly) {
       result = result.filter(genre => isFavorite(genre.id));
     }
 
     if (searchQuery.trim()) {
-      const query = searchQuery.toLowerCase();
+      const query = searchQuery.trim().toLowerCase();
       result = result.filter(genre =>
         genre.name.toLowerCase().includes(query) ||
         genre.id.toLowerCase().includes(query)
@@ -63,27 +66,18 @@ const Index = () => {
       <Header />
 
       <main className="container mx-auto px-4 py-6 space-y-6 relative z-10">
-        {/* Core Principle */}
-        <motion.div
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, ease: 'easeOut' }}
-          className="relative rounded-lg overflow-hidden border"
-          style={{
-            borderColor: 'rgba(255, 214, 10, 0.30)',
-            background: 'rgba(0,0,0,0.40)',
-          }}
-        >
-          <Scanlines />
-          <div className="px-4 py-3 text-center relative">
-            <p className="text-[10px] font-mono uppercase tracking-[0.25em] mb-1.5" style={{ color: '#ffd60a' }}>
-              Introduction
-            </p>
-            <p className="text-sm font-mono" style={{ color: '#d8efe9' }}>
-              Learn to DJ: Break it down
-            </p>
+        <section className="practice-panel practice-hero">
+          <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-primary">
+            <span>YOUR NEXT GREAT MIX STARTS HERE</span>
+            <span>{practice.mastered.length * 20} XP · {practice.mastered.length}/{questions.length} mastered</span>
           </div>
-        </motion.div>
+          <h1 className="mt-5 text-3xl sm:text-5xl font-bold leading-tight max-w-xl">Less guessing.<br /><span className="text-primary">Better mixing.</span></h1>
+          <p className="mt-4 max-w-lg text-sm sm:text-base text-muted-foreground leading-relaxed">Build your DJ instincts, one small win at a time. Learn a move, make a decision, then try it on your decks.</p>
+          <Link to="/practice" className="btn-neon-primary mt-6 inline-flex items-center justify-center gap-3 w-full sm:w-auto">
+            <Play size={18} /> {practice.active && practice.active.answers.length < 3 ? 'Continue practice' : 'Start a 2-minute challenge'} <ChevronRight size={18} />
+          </Link>
+          <p className="text-xs text-muted-foreground mt-3">3 questions · instant feedback · no equipment needed</p>
+        </section>
 
         {/* DJ 101 — Core Two Phases */}
         <div className="space-y-3">
@@ -224,13 +218,15 @@ const Index = () => {
           transition={{ delay: 0.35 }}
           className="space-y-4"
         >
-          <div className="flex items-center justify-between">
+          <div className="flex flex-wrap gap-3 items-center justify-between">
             <h2 className="text-lg font-bold font-mono uppercase tracking-wide" style={{ color: '#ffd60a' }}>
               Genre Practice Guides
             </h2>
             <div className="flex gap-2">
               <motion.button
                 whileTap={{ scale: 0.95 }}
+                aria-label="Show favorite genres"
+                aria-pressed={showFavoritesOnly}
                 onClick={() => setShowFavoritesOnly(!showFavoritesOnly)}
                 className="flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-mono uppercase tracking-[0.2em] border rounded transition-colors duration-200"
                 style={{
