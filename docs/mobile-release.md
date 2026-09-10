@@ -46,3 +46,8 @@ Set the publisher's bundle identifier and signing team, version/build number, ap
 ## Current release boundary
 
 This change prepares source projects and repeatable asset synchronization. It does not publish either app or provide a signed binary. The development machine has no configured Android SDK/JDK. Xcode 26.6 is installed; its first-launch setup was repaired successfully. The simulator build resolved its Swift packages but stopped because the iOS 26.5 platform is not installed (Xcode → Settings → Components). Native compilation and physical device testing remain release gates. Generated platform artwork remains placeholder artwork.
+
+
+## Automated Android builds
+
+The CI workflow uses Node 22, JDK 21, and SDK 36 to compile a debug APK and unsigned release AAB, and run Android lint. On successful pull requests and main-branch pushes, download the `android-builds` artifact from GitHub Actions. The APK is for device testing; the AAB still needs the publisher’s release signing before submission. No release keys are needed by CI. Web CI also runs TypeScript, lint, unit tests, production build, and the Chrome/WebKit browser suite.
