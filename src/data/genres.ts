@@ -1,4 +1,4 @@
-import { TrackSection } from '@/components/TrackFlowTimeline';
+import type { TrackSection } from '@/components/TrackFlowTimeline';
 
 export interface Genre {
   id: string;

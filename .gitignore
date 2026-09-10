@@ -22,3 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Verification outputs and signing secrets
+playwright-report/
+test-results/
+*.jks
+*.keystore
+key.properties
+keystore.properties

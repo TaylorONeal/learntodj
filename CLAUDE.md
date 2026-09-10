@@ -1,7 +1,7 @@
 # LearnToDJ — Project Context for Claude
 
 ## Stack
-React 18 + Vite 5 + TypeScript · Tailwind CSS v3 · shadcn/ui · React Router · framer-motion · PWA (vite-plugin-pwa)
+React 18 + Vite 7 + TypeScript · Tailwind CSS v3 · shadcn/ui · React Router · framer-motion · PWA (vite-plugin-pwa) · Capacitor 8 Android/iOS
 
 ## Dev
 ```bash
@@ -14,12 +14,12 @@ npm run lint
 
 ## CRT Terminal Design System
 
-Every visual decision should feel like an 80s government workstation — rendered with modern precision.
+Keep the dark teal/gold terminal identity while prioritizing readable text, clear learning actions, and comfortable mobile controls. See docs/INDEX.md for UX and release documentation.
 
 ### Core Principles
 - Monospace everything — JetBrains Mono, all text
 - Dark backgrounds + colored glow — never white or light UI
-- Subtle motion — scanlines, pulsing borders, fading text
+- Subtle motion — respect reduced motion; do not use repeating warning flashes
 - Information hierarchy through color temperature — accent = important, muted = body, warning = alert
 - CRT texture — scanline overlay on every terminal panel
 

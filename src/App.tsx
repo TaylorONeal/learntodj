@@ -1,8 +1,11 @@
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { MotionConfig } from "framer-motion";
+import { AppErrorBoundary } from "./components/AppErrorBoundary";
+import { NativeNavigation } from "./components/NativeNavigation";
+import PracticePage from "./pages/PracticePage";
 import Index from "./pages/Index";
 import IntroHub from "./pages/IntroHub";
 import PrepPage from "./pages/PrepPage";
@@ -14,15 +17,16 @@ import DevicesPage from "./pages/DevicesPage";
 import GenreChecklist from "./pages/GenreChecklist";
 import NotFound from "./pages/NotFound";
 
-const queryClient = new QueryClient();
-
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
+  <AppErrorBoundary>
+    <MotionConfig reducedMotion="user">
+      <TooltipProvider>
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <NativeNavigation />
         <Routes>
+          <Route path="/practice" element={<PracticePage />} />
           <Route path="/" element={<Index />} />
           <Route path="/intro" element={<IntroHub />} />
           <Route path="/intro/prep" element={<PrepPage />} />
@@ -35,8 +39,9 @@ const App = () => (
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
+      </TooltipProvider>
+    </MotionConfig>
+  </AppErrorBoundary>
 );
 
 export default App;

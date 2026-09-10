@@ -11,6 +11,7 @@ export function ChecklistItem({ text, isChecked, onToggle, index }: ChecklistIte
   return (
     <button
       onClick={onToggle}
+      aria-pressed={isChecked}
       className={`checklist-item w-full text-left ${isChecked ? 'checked' : ''}`}
       style={{ animationDelay: `${index * 30}ms` }}
     >
