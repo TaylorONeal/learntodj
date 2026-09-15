@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <title>LearnToDJ — build your mixing instincts</title>
+  <rect width="1200" height="630" fill="#061116"/>
+  <path d="M60 570h1080" stroke="#7effdb" stroke-opacity=".3" stroke-width="2"/>
+  <g transform="translate(40 80) scale(.85)">
+    <circle cx="244" cy="264" r="142" fill="none" stroke="#7effdb" stroke-width="18"/>
+    <circle cx="244" cy="264" r="109" fill="none" stroke="#7effdb" stroke-opacity=".35" stroke-width="8"/>
+    <circle cx="244" cy="264" r="47" fill="#7effdb"/>
+    <circle cx="244" cy="264" r="11" fill="#061116"/>
+    <path d="M365 137v117l-53 53" fill="none" stroke="#ffd60a" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="365" cy="137" r="17" fill="#ffd60a"/>
+  </g>
+  <g font-family="sans-serif">
+    <text x="500" y="175" fill="#ffd60a" font-size="22" letter-spacing="5">LEARN. PRACTICE. MIX.</text>
+    <text x="495" y="290" fill="#d8efe9" font-size="82" font-weight="700">LearnToDJ</text>
+    <text x="500" y="370" fill="#7effdb" font-size="34">Build your mixing instincts.</text>
+    <text x="500" y="438" fill="#d8efe9" font-size="24">Short challenges. Practical guides.</text>
+    <text x="500" y="479" fill="#d8efe9" font-size="24">One better transition at a time.</text>
+  </g>
+</svg>

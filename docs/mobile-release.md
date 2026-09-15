@@ -27,7 +27,7 @@ Target API 36 for current phone/tablet submissions; verify [Google Play's target
 Before submission:
 
 - Confirm publisher-owned application ID and release version.
-- Replace generated Capacitor launcher/splash artwork with approved brand artwork; supply Play screenshots, feature graphic, short and full descriptions.
+- Review the locally authored launcher/splash artwork; supply Play screenshots, feature graphic, short and full descriptions.
 - Publish a privacy policy and support contact URL. Complete Data safety and content rating based on the actual shipped build, including any future SDKs. Review Android backup behavior before claiming data never leaves a device.
 - Build and sign the AAB; run Play pre-launch reports and any testing track requirements shown for this developer account.
 - Test an installed release on real devices: cold launch in airplane mode, relaunch with saved answers, back gesture/button, display cutouts, keyboard, large fonts, screen reader, portrait/landscape, upgrade without losing progress.
@@ -45,7 +45,7 @@ Set the publisher's bundle identifier and signing team, version/build number, ap
 
 ## Current release boundary
 
-This change prepares source projects and repeatable asset synchronization. It does not publish either app or provide a signed binary. The development machine has no configured Android SDK/JDK. Xcode 26.6 is installed; its first-launch setup was repaired successfully. The simulator build resolved its Swift packages but stopped because the iOS 26.5 platform is not installed (Xcode → Settings → Components). Native compilation and physical device testing remain release gates. Generated platform artwork remains placeholder artwork.
+This change prepares source projects and repeatable asset synchronization. It does not publish either app or provide a signed binary. The development machine has no configured Android SDK/JDK. Xcode 26.6 is installed; its first-launch setup was repaired successfully. The simulator build resolved its Swift packages but stopped because the iOS 26.5 platform is not installed (Xcode → Settings → Components). Native compilation and physical device testing remain release gates. The web, PWA, Android, and iOS artwork is generated from local SVG sources with `npm run assets:generate`. As of the September 15 local check, the Xcode license is unaccepted; native compilation must be revalidated after machine setup.
 
 
 ## Automated Android builds

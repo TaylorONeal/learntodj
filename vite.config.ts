@@ -1,18 +1,30 @@
-import { defineConfig } from "vite";
+import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
-import { componentTagger } from "lovable-tagger";
 import { VitePWA } from "vite-plugin-pwa";
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => ({
+export default defineConfig(({ mode }) => {
+  const siteUrl = loadEnv(mode, process.cwd(), "PUBLIC_").PUBLIC_SITE_URL;
+  let socialImage = "/social-card.png";
+  if (siteUrl && mode !== "native") {
+    const url = new URL(siteUrl);
+    if (url.protocol !== "https:" || url.username || url.password || url.pathname !== "/" || url.search || url.hash) {
+      throw new Error("PUBLIC_SITE_URL must be an HTTPS origin without credentials, path, query, or fragment.");
+    }
+    socialImage = new URL("/social-card.png", url.origin).href;
+  }
+  return ({
   server: {
     host: "::",
     port: 8080,
   },
   plugins: [
     react(),
-    mode === "development" && componentTagger(),
+    {
+      name: "local-social-image",
+      transformIndexHtml: (html) => html.replaceAll('content="/social-card.png"', `content="${socialImage}"`),
+    },
     VitePWA({
       disable: mode === "native",
       registerType: "autoUpdate",
@@ -50,7 +62,7 @@ export default defineConfig(({ mode }) => ({
         globPatterns: ["**/*.{js,css,html,ico,png,svg,woff2}"],
       },
     }),
-  ].filter(Boolean),
+  ],
   build: {
     rollupOptions: {
       output: { manualChunks: { vendor: ["react", "react-dom", "react-router-dom", "framer-motion"] } },
@@ -61,4 +73,5 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-}));
+});
+});
