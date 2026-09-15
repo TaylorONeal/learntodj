@@ -12,7 +12,7 @@ A mobile-friendly DJ learning app built with React, TypeScript, Vite, Tailwind, 
 
 ## Development
 
-Node 22+ and npm are the supported toolchain. Use `package-lock.json` with npm; the legacy Bun lockfiles are not maintained.
+Node 22+ and npm are the supported toolchain. Use the committed `package-lock.json` with npm.
 
 ```sh
 npm ci
@@ -31,6 +31,8 @@ npm run ios:sync
 npm run ios:open
 ```
 
-Native builds need Android Studio/SDK/JDK or Xcode respectively. Store signing, publisher identity, final artwork, and real-device testing are still required; this is not a published store release.
+Native builds need Android Studio/SDK/JDK or Xcode respectively. Store signing, publisher identity, store screenshots, and real-device testing are still required; this is not a published store release.
+
+For provider-neutral hosting and local artwork generation, see [independent hosting](docs/independent-hosting.md).
 
 See the [documentation index](docs/INDEX.md), [mobile release checklist](docs/mobile-release.md), and [UX/testing notes](docs/ux-and-testing.md).
