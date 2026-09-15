@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <title>LearnToDJ record and tonearm</title>
+  <rect data-background="true" width="512" height="512" fill="#061116"/>
+  <circle cx="244" cy="264" r="142" fill="#061116" stroke="#7effdb" stroke-width="18"/>
+  <circle cx="244" cy="264" r="109" fill="none" stroke="#7effdb" stroke-opacity=".35" stroke-width="8"/>
+  <circle cx="244" cy="264" r="47" fill="#7effdb"/>
+  <circle cx="244" cy="264" r="11" fill="#061116"/>
+  <path d="M365 137v117l-53 53" fill="none" stroke="#ffd60a" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="365" cy="137" r="17" fill="#ffd60a"/>
+</svg>
