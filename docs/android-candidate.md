@@ -38,7 +38,7 @@ Explore beatmatching, phrasing, harmonic mixing, effects, loops, track structure
 
 Lessons and progress work locally on your device. No account is required. LearnToDJ is a learning companion; it does not play or mix music. Clearing app data removes saved progress.
 
-Publisher, support email, privacy URL, screenshots, and Play feature graphic are intentionally pending real studio details and installed-device capture.
+The [store packet](store-packet.md) now contains owned feature artwork, listing copy, and six clearly labeled mobile-web screenshot drafts. Publisher, support email, privacy URL, and installed-device screenshot capture remain pending.
 
 ## Required before submission
 
