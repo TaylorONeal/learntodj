@@ -36,7 +36,13 @@ const densities = { mdpi: 1, hdpi: 1.5, xhdpi: 2, xxhdpi: 3, xxxhdpi: 4 };
 for (const [density, scale] of Object.entries(densities)) {
   const dir = `android/app/src/main/res/mipmap-${density}`;
   for (const name of ['ic_launcher', 'ic_launcher_round']) {
-    await exportPng(source, 48 * scale, 48 * scale, `${dir}/${name}.png`);
+    const size = 48 * scale;
+    const shape = name === 'ic_launcher_round'
+      ? '<circle cx="256" cy="256" r="244" fill="white"/>'
+      : '<rect x="12" y="12" width="488" height="488" rx="96" fill="white"/>';
+    const mask = await sharp(Buffer.from('<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512">' + shape + '</svg>')).resize(size, size).png().toBuffer();
+    await sharp(source).resize(size, size).composite([{ input: mask, blend: 'dest-in' }]).png()
+      .toFile(resolve(root, dir, name + '.png'));
   }
   // Adaptive foreground uses a 108dp canvas. The mark fits the central safe region.
   await exportPng(Buffer.from(foreground), 108 * scale, 108 * scale, `${dir}/ic_launcher_foreground.png`);
