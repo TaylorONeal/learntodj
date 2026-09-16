@@ -2,6 +2,8 @@
 
 ## Shared app
 
+LearnToDJ is in the Android launch set alongside JetSweep, Alpine Pack, and WakeState. The publisher will be a studio identity; the studio name has not been chosen. Do not use a personal username as the publisher or choose a final application ID/signing identity until the studio decision is made.
+
 Capacitor 8 wraps the same React app in Android and iOS projects. `capacitor.config.ts` uses `com.learntodj.app` as a provisional identifier: confirm that it belongs to the publisher before the first store submission. If it changes, update the native application ID / namespace / Java package and Xcode bundle identifier too; changing only the Capacitor config does not rename existing native projects.
 
 Native builds bundle all lesson content and fonts. Service worker generation is disabled in native mode to avoid stale assets across store updates. The web build remains an installable offline PWA. There is no authentication, ads, analytics, backend, or payment integration. Progress is local to the device; clearing app data removes it. Browser storage can be evicted; cross-device sync is not implemented.
@@ -45,7 +47,7 @@ Set the publisher's bundle identifier and signing team, version/build number, ap
 
 ## Current release boundary
 
-This change prepares source projects and repeatable asset synchronization. It does not publish either app or provide a signed binary. The development machine has no configured Android SDK/JDK. Xcode 26.6 is installed; its first-launch setup was repaired successfully. The simulator build resolved its Swift packages but stopped because the iOS 26.5 platform is not installed (Xcode → Settings → Components). Native compilation and physical device testing remain release gates. The web, PWA, Android, and iOS artwork is generated from local SVG sources with `npm run assets:generate`. As of the September 15 local check, the Xcode license is unaccepted; native compilation must be revalidated after machine setup.
+This repository prepares source projects and repeatable asset synchronization. It does not publish either app or provide a publisher-signed release. Android SDK 36 and Homebrew JDK 21 are available locally; use explicit paths if the default Java launcher cannot locate them. Xcode 26.6 is installed; its first-launch setup was repaired successfully. The simulator build resolved its Swift packages but stopped because the iOS 26.5 platform is not installed (Xcode → Settings → Components). iOS compilation and physical device testing remain release gates. The web, PWA, Android, and iOS artwork is generated from local SVG sources with `npm run assets:generate`. As of the September 15 local check, the Xcode license is unaccepted; native compilation must be revalidated after machine setup.
 
 
 ## Automated Android builds
