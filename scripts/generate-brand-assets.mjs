@@ -15,6 +15,8 @@ await exportPng(source, 512, 512, 'public/pwa-512x512.png');
 await exportPng(source, 180, 180, 'public/apple-touch-icon.png');
 await exportPng(await readFile(resolve(root, 'assets/brand/social-card.svg')), 1200, 630, 'public/social-card.png');
 await writeFile(resolve(root, 'public/favicon.svg'), icon);
+await sharp(await readFile(resolve(root, 'assets/brand/play-feature.svg')))
+  .removeAlpha().png().toFile(resolve(root, 'assets/store/android/feature-graphic.png'));
 
 // ICO directory with embedded PNGs, so legacy /favicon.ico requests use our mark too.
 const sizes = [16, 32, 48];
