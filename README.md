@@ -4,7 +4,7 @@ A mobile-friendly DJ learning app built with React, TypeScript, Vite, Tailwind, 
 
 ## Features
 
-- Three-question practice rounds with immediate explanations, saved progress, and concept mastery XP.
+- Three-question practice rounds with immediate explanations, saved progress, and concept recall XP.
 - Genre guides for BPM, harmonic mixing, beatgrids, phrasing, transitions, and recovery.
 - Persistent checklist state, favorites, and basic/advanced guidance.
 - Installable offline web app and native Android/iOS source projects.
