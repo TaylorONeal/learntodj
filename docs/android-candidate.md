@@ -58,3 +58,5 @@ Android assembleDebug, bundleRelease, lintDebug, and testDebugUnitTest completed
 Native lint reports zero errors and 12 warnings: dependency update suggestions, scaffold resources reported unused, optional monochrome launcher artwork, and inherited splash density/layout conventions. Legacy launcher shape/duplicate warnings and manifest ordering were corrected. These remaining warnings do not establish device compatibility; installed-device testing is still pending. Web verification remains 13 unit tests and 11 browser tests passed (one existing WebKit cold-offline skip); web lint has seven existing warnings and zero errors.
 
 Next necessary step: choose the studio name and approve its final application ID/signing ownership, while testing the debug APK on physical Android hardware. Do not upload this unsigned bundle or debug-signed APK as a release.
+
+Source-update note: the subsequent DJ-01–05 GTM slice changes public progress wording from mastery to recall. The APK/AAB hashes above describe the earlier native candidate; rebuild and repeat native checks before using the new wording in a native pilot or matching final store screenshots.

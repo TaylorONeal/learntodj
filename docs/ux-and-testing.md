@@ -39,3 +39,7 @@ Native signing, device testing, and store review are separate from browser verif
 - Dependency audit: zero reported vulnerabilities after updates.
 - Web production build: passed. Native compile/device results and remaining release gates are recorded in [mobile release](mobile-release.md).
 - Native web build and Capacitor sync: passed for Android and iOS; all 17 bundled files match the build output and neither native bundle contains a service worker.
+
+## GTM claim repair — September 16, 2026
+
+Public practice progress now says “recalled” and explains that XP records correct quiz answers, not live mixing skill. The persisted `mastered` field stays unchanged for compatibility. A regression runs six rounds through serialization/reload and confirms rewards stop at nine unique concepts / 180 XP. Browser assertions check the recall wording alongside the existing wrong-answer explanation, result, and home-return flow. The pilot uses voluntary manual observation rather than adding marketing telemetry; see [the adopted PRD and ticket record](gtm-prd.md).

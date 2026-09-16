@@ -52,3 +52,18 @@ describe('resilient saved checklists', () => {
     expect(writeStorage('missing', {})).toBe(false);
   });
 });
+
+describe('recall evidence across repeat practice', () => {
+  it('caps rewards at nine unique concepts across repeated rounds and persisted reloads', () => {
+    let state = emptyPractice;
+    for (let round = 0; round < 6; round++) {
+      state = startRound(parsePractice(JSON.parse(JSON.stringify(state))));
+      for (const id of state.active!.ids) {
+        state = answerQuestion(state, questions.find(question => question.id === id)!.answer);
+      }
+      expect(state.mastered.length * 20).toBe(Math.min(round + 1, 3) * 60);
+    }
+    expect(state.rounds).toBe(6);
+    expect(state.mastered).toHaveLength(9);
+  });
+});

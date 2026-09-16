@@ -35,7 +35,7 @@ Feature graphic alt text: LearnToDJ, practice the next transition, with teal rec
 
 Learn one mixing concept, practice a decision, then try it on your decks. LearnToDJ combines short three-question challenges with genre-specific checklists for preparing tracks and building transitions.
 
-Practice phrasing, harmonic mixing, cueing, beatgrids, levels, tempo, transitions, and recovery. Get an explanation after every answer and earn concept mastery XP as you learn. There is no timer or lives system.
+Practice phrasing, harmonic mixing, cueing, beatgrids, levels, tempo, transitions, and recovery. Get an explanation after every answer and earn concept recall XP as you learn. There is no timer or lives system.
 
 Explore preparation, playing, track structure, effects, loops, remixes, and gear guides. Save favorite genres and check off steps as you work through a mixing guide.
 
@@ -69,4 +69,4 @@ The feature graphic follows Google's 1024×500, no-alpha specification. Phone dr
 
 ## Validation result
 
-All six screenshots and the feature graphic were visually inspected. Automated checks pass for image dimensions, PNG format, alpha requirements, screenshot provenance, zero captured browser errors/overflow/external requests, and listing length (76-character short description, 869-character full description). The production web build and 13 existing unit tests pass. ESLint reports zero errors and seven existing warnings. No application logic, identity, authentication, backup policy, or native package content changed in this packet task.
+All six screenshots and the feature graphic were visually inspected. Automated checks pass for image dimensions, PNG format, alpha requirements, screenshot provenance, zero captured browser errors/overflow/external requests, and listing length (76-character short description, 868-character full description). The production web build and 14 unit tests pass. ESLint reports zero errors and seven existing warnings. No application logic, identity, authentication, backup policy, or native package content changed in this packet task.

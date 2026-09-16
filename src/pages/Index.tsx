@@ -69,7 +69,7 @@ const Index = () => {
         <section className="practice-panel practice-hero">
           <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-primary">
             <span>YOUR NEXT GREAT MIX STARTS HERE</span>
-            <span>{practice.mastered.length * 20} XP · {practice.mastered.length}/{questions.length} mastered</span>
+            <span>{practice.mastered.length * 20} XP · {practice.mastered.length}/{questions.length} recalled</span>
           </div>
           <h1 className="mt-5 text-3xl sm:text-5xl font-bold leading-tight max-w-xl">Less guessing.<br /><span className="text-primary">Better mixing.</span></h1>
           <p className="mt-4 max-w-lg text-sm sm:text-base text-muted-foreground leading-relaxed">Build your DJ instincts, one small win at a time. Learn a move, make a decision, then try it on your decks.</p>
