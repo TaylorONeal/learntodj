@@ -5,3 +5,4 @@
 - [UX and testing](ux-and-testing.md): practice rules, persistence, verification coverage.
 - [CI workflow](../.github/workflows/ci.yml): browser checks and Android APK/AAB build artifacts.
 - [Independent hosting](independent-hosting.md): static hosting, local artwork, and deployment boundaries.
+- [Android candidate](android-candidate.md): local build artifacts, studio identity gates, and draft listing copy.
