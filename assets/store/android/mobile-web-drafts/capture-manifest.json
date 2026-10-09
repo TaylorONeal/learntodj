@@ -1,0 +1,48 @@
+{
+  "status": "MOBILE-WEB DRAFTS — not installed Android screenshots; recapture on approved native build before store submission.",
+  "capturedAt": "2026-09-16T03:39:18.021Z",
+  "engine": "Playwright Chromium",
+  "viewport": {
+    "width": 540,
+    "height": 960
+  },
+  "pixelSize": {
+    "width": 1080,
+    "height": 1920
+  },
+  "method": "Fresh isolated browser context; UI interactions only; no injected progress, modified UI, overlays, or device frames.",
+  "errors": [],
+  "externalRequests": [],
+  "captures": [
+    {
+      "file": "01-start.png",
+      "description": "Fresh session: zero XP, entry to short practice and preparation guides.",
+      "route": "/"
+    },
+    {
+      "file": "02-question.png",
+      "description": "First real practice question, before an answer is chosen.",
+      "route": "/practice"
+    },
+    {
+      "file": "03-explanation.png",
+      "description": "Correct answer and the app’s phrasing explanation; 20 XP earned by this interaction.",
+      "route": "/practice"
+    },
+    {
+      "file": "04-round-results.png",
+      "description": "Three answers completed through UI: 3 of 3 correct and 60 XP; demonstration session, not a user testimonial.",
+      "route": "/practice"
+    },
+    {
+      "file": "05-house-checklist.png",
+      "description": "House preparation checklist with one item checked through UI.",
+      "route": "/genre/house"
+    },
+    {
+      "file": "06-track-flow.png",
+      "description": "Actual track-flow lesson showing musical structure.",
+      "route": "/intro/flows"
+    }
+  ]
+}
