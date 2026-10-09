@@ -131,3 +131,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 - [ ] Buttons: ghost/bordered only — no filled backgrounds
 - [ ] All decorative overlays: `pointer-events-none`
 - [ ] No flash faster than 0.5s (accessibility)
+
+## Platform independence
+
+No hosted app-builder tooling, hosting, icons, env vars or assets (no builder plugins in `package.json` or lockfiles, no builder config files or asset dumps, no template favicon or placeholder images). CI enforces this with `scripts/check-platform-independence.sh`; run it before pushing.
