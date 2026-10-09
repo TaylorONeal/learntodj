@@ -19,8 +19,10 @@ test('practice loop, reload, rewards, and return home', async ({ page }) => {
   await page.getByRole('button', { name: 'See my results' }).click();
   await expect(page.getByText('2 of 3 correct')).toBeVisible();
   await expect(page.getByText('40 XP', { exact: true })).toBeVisible();
+  await expect(page.getByText(/XP reflects correct quiz answers, not live mixing skill/)).toBeVisible();
+  await expect(page.getByText(/2 of 9 concepts recalled correctly/)).toBeVisible();
   await page.getByRole('link', { name: 'Done for now' }).click();
-  await expect(page.getByText(/40 XP · 2\/9 mastered/)).toBeVisible();
+  await expect(page.getByText(/40 XP · 2\/9 recalled/)).toBeVisible();
   expect(errors).toEqual([]);
 });
 
