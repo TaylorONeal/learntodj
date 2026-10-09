@@ -131,3 +131,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 - [ ] Buttons: ghost/bordered only — no filled backgrounds
 - [ ] All decorative overlays: `pointer-events-none`
 - [ ] No flash faster than 0.5s (accessibility)
+
+## Platform independence
+
+No Lovable or Replit tooling, hosting, icons, env vars or assets (no `lovable-tagger`, `.replit`, `replit.md`, `attached_assets/`, template heart favicon, template `placeholder.svg`). CI enforces this with `scripts/check-platform-independence.sh`; run it before pushing. Details: the guard script header.
