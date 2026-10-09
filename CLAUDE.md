@@ -134,4 +134,4 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 ## Platform independence
 
-No Lovable or Replit tooling, hosting, icons, env vars or assets (no `lovable-tagger`, `.replit`, `replit.md`, `attached_assets/`, template heart favicon, template `placeholder.svg`). CI enforces this with `scripts/check-platform-independence.sh`; run it before pushing. Details: the guard script header.
+No hosted app-builder tooling, hosting, icons, env vars or assets (no builder plugins in `package.json` or lockfiles, no builder config files or asset dumps, no template favicon or placeholder images). CI enforces this with `scripts/check-platform-independence.sh`; run it before pushing.
