@@ -38,8 +38,8 @@ export default function PracticePage() {
         <p className="text-secondary text-sm">ROUND COMPLETE</p>
         <h1 ref={headingRef} id="result-heading" tabIndex={-1} className="text-3xl font-bold">{score === 3 ? 'Clean mix. Nice work.' : 'Every mix teaches you something.'}</h1>
         <p className="text-lg">{score} of 3 correct</p>
-        <p className="text-muted-foreground">{state.mastered.length} of {questions.length} concepts mastered. Earn 20 XP the first time you answer each concept correctly.</p>
-        <ProgressBar progress={state.mastered.length / questions.length * 100} label="Concept mastery" />
+        <p className="text-muted-foreground">{state.mastered.length} of {questions.length} concepts recalled correctly. Earn 20 XP the first time you answer each concept correctly.</p>
+        <ProgressBar progress={state.mastered.length / questions.length * 100} label="Concept recall" />
         <button className="btn-neon-primary w-full" onClick={() => { setReview(null); update(startRound(state)); }}>Practice another round</button>
         <Link to="/genre/house" className="btn-neon-secondary block text-center">Try it on your decks: House guide</Link>
         <Link to="/" className="block text-center text-sm underline">Done for now</Link>
@@ -60,7 +60,7 @@ export default function PracticePage() {
           <button className="btn-neon-primary w-full" onClick={() => setReview(null)}>{active.answers.length === 3 ? 'See my results' : 'Next question'}</button>
         </div>}
       </section>}
-      <p className="text-xs text-muted-foreground text-center">Progress stays on this device. Take a break whenever you like.</p>
+      <p className="text-xs text-muted-foreground text-center">XP reflects correct quiz answers, not live mixing skill. Progress is saved locally; take a break whenever you like.</p>
     </main>
   </div>;
 }

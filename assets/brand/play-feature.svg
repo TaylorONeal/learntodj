@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="500" viewBox="0 0 1024 500">
+  <title>LearnToDJ — practice the next transition</title>
+  <defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#103f3b"/><stop offset="1" stop-color="#061116"/></linearGradient></defs>
+  <rect width="1024" height="500" fill="url(#bg)"/>
+  <path d="M0 411h1024M0 433h1024" stroke="#7effdb" stroke-opacity=".08"/>
+  <g fill="none" stroke="#7effdb" stroke-opacity=".13"><circle cx="814" cy="244" r="220"/><circle cx="814" cy="244" r="196"/></g>
+  <g transform="translate(625 74) scale(.65)">
+    <circle cx="244" cy="264" r="142" fill="#061116" stroke="#7effdb" stroke-width="18"/>
+    <circle cx="244" cy="264" r="109" fill="none" stroke="#7effdb" stroke-opacity=".35" stroke-width="8"/>
+    <circle cx="244" cy="264" r="47" fill="#7effdb"/><circle cx="244" cy="264" r="11" fill="#061116"/>
+    <path d="M365 137v117l-53 53" fill="none" stroke="#ffd60a" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/><circle cx="365" cy="137" r="17" fill="#ffd60a"/>
+  </g>
+  <g font-family="sans-serif">
+    <text x="76" y="154" fill="#ffd60a" font-size="19" letter-spacing="4">LEARN. PRACTICE. MIX.</text>
+    <text x="70" y="248" fill="#d8efe9" font-size="76" font-weight="700">LearnToDJ</text>
+    <text x="76" y="309" fill="#7effdb" font-size="28">Practice the next transition.</text>
+    <text x="76" y="358" fill="#d8efe9" font-size="20">Short challenges. Practical guides.</text>
+  </g>
+</svg>
