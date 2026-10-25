@@ -82,3 +82,7 @@ This started as notes to myself.
 - [@grizzpm](https://www.youtube.com/@grizzpm) on YouTube
 
 If this saved you time, a star helps other people find it. Issues and PRs are welcome.
+
+## License
+
+MIT, see [LICENSE](LICENSE).
