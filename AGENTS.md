@@ -137,3 +137,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 ## Platform independence
 
 No hosted app-builder tooling, hosting, icons, env vars or assets (no builder plugins in `package.json` or lockfiles, no builder config files or asset dumps, no template favicon or placeholder images). CI enforces this with `scripts/check-platform-independence.sh`; run it before pushing.
+
+## Secrets
+
+Never write a secret into any file: code, config, docs, notes, prompts, submission notes, logs or commit messages. That covers API keys (RevenueCat and Stripe `sk_` keys included), Supabase service role keys and JWT secrets, access tokens (Codemagic, Vercel, GitHub, Expo), deploy keys, and the contents of `.p8` or `.pem` files. Write where the secret lives instead, for example "RevenueCat dashboard > API keys" or "Supabase secrets", and read it from an environment variable. The secret-scan check (`.github/workflows/secret-scan.yml`, rules in `.gitleaks.toml`) fails any pull request that adds one. If a real secret was ever committed, removing it is not enough: say so, so the key gets rotated.
